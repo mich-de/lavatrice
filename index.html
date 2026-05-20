@@ -1,2126 +1,691 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rex RL40A — Manuale d'Uso e Installazione</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --red: #C41E3A;
-            --red-deep: #8B0000;
-            --red-soft: rgba(196, 30, 58, 0.08);
-            --paper: #F5F0E8;
-            --paper-dark: #E8E0D0;
-            --ink: #1A1A1A;
-            --ink-light: #4A4A4A;
-            --ink-muted: #8A8A8A;
-            --rule: #C8C0B4;
-            --rule-light: #E0DAD0;
-            --warm: #FAF8F4;
-            --amber: #B8860B;
-            --steel: #5A6A7A;
-            --mono: 'DM Mono', monospace;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --sans: 'DM Sans', sans-serif;
-            --sb: 300px;
-            --hh: 64px
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 18px
-        }
-
-        body {
-            font-family: var(--sans);
-            background: var(--paper);
-            color: var(--ink);
-            line-height: 1.75;
-            -webkit-font-smoothing: antialiased;
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 35px, var(--rule-light) 35px, var(--rule-light) 36px);
-            background-size: 100% 36px;
-            background-attachment: fixed
-        }
-
-        @media (min-width: 1400px) {
-            html {
-                font-size: 19px
-            }
-            :root {
-                --sb: 320px
-            }
-        }
-        @media (min-width: 1800px) {
-            html {
-                font-size: 20px
-            }
-            :root {
-                --sb: 340px
-            }
-        }
-        @media (max-width: 1100px) {
-            html {
-                font-size: 17px
-            }
-            :root {
-                --sb: 260px
-            }
-        }
-        @media (max-width: 768px) {
-            html {
-                font-size: 16px
-            }
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--paper-dark)
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--rule);
-            border-radius: 3px
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--red)
-        }
-
-        #header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--hh);
-            background: rgba(245, 240, 232, 0.92);
-            backdrop-filter: blur(16px);
-            border-bottom: 2px solid var(--ink);
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
-            z-index: 100;
-            gap: 16px
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            white-space: nowrap
-        }
-
-        .brand-mark {
-            width: 36px;
-            height: 36px;
-            background: var(--ink);
-            color: var(--paper);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            font-weight: 500;
-            border-radius: 2px
-        }
-
-        .brand-text {
-            font-family: var(--serif);
-            font-size: 1.15rem;
-            font-style: italic;
-            color: var(--ink);
-            line-height: 1.1
-        }
-
-        .brand-text span {
-            display: block;
-            font-family: var(--mono);
-            font-size: 0.55rem;
-            font-style: normal;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: var(--ink-muted);
-            margin-top: 2px
-        }
-
-        #search-wrap {
-            flex: 1;
-            max-width: 520px;
-            position: relative
-        }
-
-        #search {
-            width: 100%;
-            background: var(--warm);
-            border: 2px solid var(--rule);
-            border-radius: 8px;
-            padding: 10px 16px 10px 42px;
-            color: var(--ink);
-            font-family: var(--sans);
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s
-        }
-
-        #search:focus {
-            border-color: var(--red);
-            box-shadow: 0 0 0 4px var(--red-soft);
-            background: #fff
-        }
-
-        #search::placeholder {
-            color: var(--ink-muted);
-            font-size: 0.88rem
-        }
-
-        #search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--ink-muted);
-            pointer-events: none;
-            width: 18px;
-            height: 18px
-        }
-
-        #search-results {
-            position: absolute;
-            top: calc(100% + 6px);
-            left: 0;
-            right: 0;
-            background: var(--warm);
-            border: 1.5px solid var(--rule);
-            border-radius: 8px;
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
-            z-index: 200;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15)
-        }
-
-        #search-results.active {
-            display: block;
-            animation: searchDrop 0.15s ease-out
-        }
-
-        @keyframes searchDrop {
-            from {
-                opacity: 0;
-                transform: translateY(-4px)
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
-        }
-
-        .result-item {
-            padding: 12px 16px;
-            cursor: pointer;
-            border-bottom: 1px solid var(--rule-light);
-            font-size: 0.88rem;
-            transition: background 0.15s
-        }
-
-        .result-item:last-child {
-            border-bottom: none
-        }
-        .result-item:hover {
-            background: var(--paper-dark)
-        }
-
-        .result-section {
-            color: var(--red);
-            font-size: 0.68rem;
-            font-family: var(--mono);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 3px
-        }
-
-        .no-results {
-            padding: 16px;
-            color: var(--ink-muted);
-            text-align: center;
-            font-size: 0.88rem
-        }
-
-        #toggle-nav {
-            display: none;
-            background: none;
-            border: 1.5px solid var(--rule);
-            color: var(--ink);
-            padding: 6px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem
-        }
-
-        #sidebar {
-            position: fixed;
-            top: var(--hh);
-            left: 0;
-            width: var(--sb);
-            height: calc(100vh - var(--hh));
-            background: var(--paper);
-            border-right: 1px solid var(--rule);
-            overflow-y: auto;
-            padding: 16px 0;
-            z-index: 90;
-            transition: transform 0.3s ease
-        }
-
-        #sidebar::-webkit-scrollbar {
-            width: 3px
-        }
-
-        .nav-sec {
-            margin-bottom: 8px
-        }
-
-        .nav-sec-title {
-            padding: 8px 16px 4px;
-            font-family: var(--mono);
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--ink-muted);
-            font-weight: 500;
-            border-bottom: 1px solid var(--rule-light);
-            margin-bottom: 4px
-        }
-
-        .nav-item {
-            display: block;
-            padding: 5px 16px 5px 20px;
-            color: var(--ink-light);
-            text-decoration: none;
-            font-size: 0.78rem;
-            font-weight: 400;
-            transition: color 0.15s, background 0.15s;
-            border-left: 3px solid transparent;
-            line-height: 1.4
-        }
-
-        .nav-item:hover {
-            color: var(--ink);
-            background: var(--paper-dark)
-        }
-
-        .nav-item.active {
-            color: var(--red);
-            border-left-color: var(--red);
-            background: var(--red-soft);
-            font-weight: 500
-        }
-
-        .nav-sub {
-            padding-left: 32px;
-            font-size: 0.74rem;
-            color: var(--ink-muted)
-        }
-
-        .nav-sub:hover {
-            color: var(--ink-light)
-        }
-
-        #main {
-            margin-left: var(--sb);
-            margin-top: var(--hh);
-            min-height: calc(100vh - var(--hh))
-        }
-
-        #content {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 56px 72px 96px;
-            background: var(--warm);
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.04);
-            border-left: 1px solid var(--rule-light);
-            border-right: 1px solid var(--rule-light)
-        }
-
-        @media (min-width: 1500px) {
-            #content {
-                max-width: 1100px;
-                padding: 64px 88px 112px
-            }
-        }
-        @media (min-width: 1800px) {
-            #content {
-                max-width: 1280px;
-                padding: 72px 104px 128px
-            }
-        }
-
-        .section {
-            margin-bottom: 72px;
-            scroll-margin-top: calc(var(--hh) + 20px);
-            position: relative
-        }
-
-        .section::before {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--red);
-            margin-bottom: 16px
-        }
-
-        .section-title {
-            font-family: var(--serif);
-            font-size: 1.8rem;
-            font-style: italic;
-            color: var(--ink);
-            margin-bottom: 4px;
-            letter-spacing: -0.01em;
-            line-height: 1.2
-        }
-
-        .section-subtitle {
-            font-family: var(--serif);
-            font-size: 1.25rem;
-            font-style: italic;
-            color: var(--red);
-            margin: 32px 0 12px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--rule-light)
-        }
-
-        .subsection-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin: 20px 0 10px;
-            color: var(--ink);
-            text-transform: uppercase;
-            letter-spacing: 0.06em
-        }
-
-        p {
-            margin-bottom: 14px;
-            color: var(--ink-light);
-            font-size: 0.88rem
-        }
-
-        strong,
-        b {
-            color: var(--ink);
-            font-weight: 600
-        }
-
-        ul,
-        ol {
-            margin: 10px 0 14px 20px;
-            color: var(--ink-light);
-            font-size: 0.88rem
-        }
-
-        li {
-            margin-bottom: 6px
-        }
-        li::marker {
-            color: var(--red)
-        }
-
-        .alert {
-            border-radius: 4px;
-            padding: 16px 20px;
-            margin: 18px 0;
-            font-size: 0.85rem;
-            line-height: 1.55;
-            border: 1px solid;
-            position: relative
-        }
-
-        .alert::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            border-radius: 4px 0 0 4px
-        }
-
-        .alert-danger {
-            background: rgba(196, 30, 58, 0.04);
-            border-color: rgba(196, 30, 58, 0.2);
-            color: var(--red-deep)
-        }
-
-        .alert-danger::before {
-            background: var(--red)
-        }
-
-        .alert-warning {
-            background: rgba(184, 134, 11, 0.06);
-            border-color: rgba(184, 134, 11, 0.25);
-            color: #8B6914
-        }
-
-        .alert-warning::before {
-            background: var(--amber)
-        }
-
-        .alert-info {
-            background: rgba(90, 106, 122, 0.06);
-            border-color: rgba(90, 106, 122, 0.2);
-            color: var(--steel)
-        }
-
-        .alert-info::before {
-            background: var(--steel)
-        }
-
-        .section-badge {
-            display: inline-block;
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--red);
-            border: 1px solid var(--red);
-            padding: 2px 10px;
-            border-radius: 3px;
-            margin-bottom: 12px
-        }
-
-        .alert-title {
-            font-weight: 700;
-            font-family: var(--mono);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            margin-bottom: 6px
-        }
-
-        .table-wrap {
-            overflow-x: auto;
-            margin: 18px 0;
-            border-radius: 4px;
-            border: 1px solid var(--rule)
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.82rem
-        }
-
-        th {
-            background: var(--paper-dark);
-            color: var(--ink);
-            font-family: var(--mono);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
-            padding: 10px 14px;
-            text-align: left;
-            border-bottom: 2px solid var(--rule)
-        }
-
-        td {
-            padding: 9px 14px;
-            border-bottom: 1px solid var(--rule-light);
-            color: var(--ink-light)
-        }
-
-        tr:last-child td {
-            border-bottom: none
-        }
-        tr:hover td {
-            background: rgba(0, 0, 0, 0.02)
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px;
-            background: var(--rule);
-            border: 1px solid var(--rule);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 18px 0
-        }
-
-        .spec-label {
-            background: var(--paper);
-            padding: 10px 14px;
-            font-size: 0.78rem;
-            color: var(--ink-muted);
-            font-weight: 500
-        }
-
-        .spec-value {
-            background: var(--warm);
-            padding: 10px 14px;
-            font-size: 0.82rem;
-            color: var(--ink);
-            font-family: var(--mono);
-            font-size: 0.76rem
-        }
-
-        .steps {
-            counter-reset: step;
-            margin: 18px 0
-        }
-
-        .step {
-            position: relative;
-            padding: 16px 16px 16px 56px;
-            background: var(--warm);
-            border: 1px solid var(--rule-light);
-            border-radius: 4px;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            color: var(--ink-light)
-        }
-
-        .step::before {
-            counter-increment: step;
-            content: counter(step);
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 28px;
-            height: 28px;
-            background: var(--ink);
-            color: var(--paper);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            font-weight: 500
-        }
-
-        .maint-header {
-            background: var(--ink);
-            color: var(--paper);
-            padding: 24px 28px;
-            border-radius: 4px;
-            margin-bottom: 24px
-        }
-
-        .maint-header h3 {
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            margin-bottom: 10px;
-            opacity: 0.85;
-            color: var(--paper)
-        }
-
-        .maint-header .legend {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            color: var(--paper)
-        }
-
-        .maint-header .legend span {
-            display: flex;
-            align-items: center;
-            gap: 8px
-        }
-
-        .maint-header .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            flex-shrink: 0
-        }
-
-        .maint-header .dot-red {
-            background: var(--red)
-        }
-        .maint-header .dot-ink {
-            background: var(--paper);
-            border: 2px solid var(--paper)
-        }
-
-        .manual-img {
-            margin: 24px 0;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid var(--rule);
-            background: #fff;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06)
-        }
-
-        .manual-img img {
-            width: 100%;
-            height: auto;
-            display: block
-        }
-
-        .manual-img .img-caption {
-            padding: 8px 14px;
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--ink-muted);
-            border-top: 1px solid var(--rule-light);
-            background: var(--paper)
-        }
-
-        .img-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin: 18px 0
-        }
-
-        .img-row .manual-img {
-            margin: 0
-        }
-
-        .diagram {
-            background: var(--warm);
-            border: 1px solid var(--rule);
-            border-radius: 4px;
-            padding: 24px;
-            margin: 18px 0
-        }
-
-        .diagram-title {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            color: var(--ink-muted);
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--rule-light)
-        }
-
-        .diagram-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px
-        }
-
-        .diagram-item {
-            background: var(--paper);
-            border: 1px solid var(--rule-light);
-            border-radius: 4px;
-            padding: 12px 8px;
-            font-size: 0.75rem;
-            text-align: center
-        }
-
-        .diagram-item .num {
-            font-family: var(--mono);
-            color: var(--red);
-            font-weight: 500;
-            font-size: 0.85rem;
-            display: block;
-            margin-bottom: 4px
-        }
-
-        .diagram-item .label {
-            color: var(--ink-light);
-            font-size: 0.72rem
-        }
-
-        #footer {
-            border-top: 2px solid var(--ink);
-            padding: 32px 40px;
-            margin-left: var(--sb);
-            text-align: center;
-            color: var(--ink-muted);
-            font-size: 0.78rem;
-            background: var(--paper)
-        }
-
-        #footer a {
-            color: var(--red);
-            text-decoration: none
-        }
-
-        #overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 85
-        }
-
-        #overlay.active {
-            display: block
-        }
-
-        @media(max-width:1200px) {
-            :root {
-                --sb: 260px
-            }
-            #content {
-                max-width: 100%;
-                padding: 40px 48px 80px
-            }
-        }
-
-        @media(max-width:1023px) and (min-width:769px) {
-            #search-wrap {
-                max-width: 340px
-            }
-            #search {
-                font-size: 0.88rem;
-                padding: 9px 14px 9px 38px
-            }
-            #content {
-                max-width: 100%;
-                padding: 36px 40px 72px
-            }
-        }
-
-        @media(max-width:900px) {
-            :root {
-                --sb: 240px
-            }
-            #content {
-                padding: 32px 28px 64px
-            }
-            #hero>div {
-                flex-direction: column;
-                padding: 32px 28px;
-                gap: 24px
-            }
-            #hero>div>div:last-child {
-                width: 200px
-            }
-            .specs-grid {
-                grid-template-columns: 1fr
-            }
-        }
-
-        @media(max-width:768px) {
-            #header {
-                padding: 0 12px;
-                gap: 8px;
-                height: auto;
-                min-height: 56px;
-                flex-wrap: wrap
-            }
-            .brand {
-                gap: 8px
-            }
-            .brand-mark {
-                width: 30px;
-                height: 30px;
-                font-size: 0.6rem
-            }
-            .brand-text {
-                font-size: 0.95rem
-            }
-            .brand-text span {
-                font-size: 0.45rem
-            }
-            #search-wrap {
-                order: 3;
-                flex: 1 1 100%;
-                max-width: 100%;
-                margin-bottom: 8px
-            }
-            #search {
-                padding: 12px 14px 12px 40px;
-                font-size: 1rem;
-                border-radius: 8px
-            }
-            #search::placeholder {
-                font-size: 0.9rem
-            }
-            #search-icon {
-                left: 12px;
-                width: 16px;
-                height: 16px
-            }
-            #search-results {
-                border-radius: 8px;
-                max-height: 300px
-            }
-            .result-item {
-                padding: 14px 14px
-            }
-            #sidebar {
-                transform: translateX(-100%);
-                width: 280px
-            }
-            #sidebar.open {
-                transform: translateX(0)
-            }
-            #main {
-                margin-left: 0
-            }
-            #content {
-                padding: 20px 14px 48px;
-                border: none;
-                box-shadow: none
-            }
-            #hero {
-                margin-left: 0 !important
-            }
-            #hero>div {
-                padding: 20px 14px !important;
-                gap: 14px !important;
-                flex-direction: column !important
-            }
-            #hero>div>div:first-child {
-                text-align: center
-            }
-            #hero h2 {
-                font-size: 1.5rem !important
-            }
-            #hero p {
-                font-size: 0.75rem !important
-            }
-            #hero>div>div:first-child>div {
-                justify-content: center;
-                gap: 12px
-            }
-            .specs-grid {
-                grid-template-columns: 1fr
-            }
-            #footer {
-                margin-left: 0;
-                padding: 20px 14px
-            }
-            #toggle-nav {
-                display: block;
-                padding: 8px 10px;
-                font-size: 1.2rem
-            }
-            .section-title {
-                font-size: 1.35rem
-            }
-            .section::before {
-                width: 36px;
-                height: 2px
-            }
-            .subsection-title {
-                font-size: 0.88rem
-            }
-            p,
-            li {
-                font-size: 0.92rem;
-                line-height: 1.7
-            }
-            .alert {
-                padding: 12px 14px;
-                font-size: 0.85rem
-            }
-            .step {
-                padding: 12px 12px 12px 44px;
-                font-size: 0.88rem
-            }
-            .step::before {
-                width: 24px;
-                height: 24px;
-                font-size: 0.7rem;
-                left: 10px
-            }
-            .table-wrap {
-                font-size: 0.72rem;
-                border-radius: 4px;
-                -webkit-overflow-scrolling: touch
-            }
-            th,
-            td {
-                padding: 6px 6px
-            }
-            body {
-                background-image: none;
-                background: var(--warm)
-            }
-            .section-title {
-                font-size: 1.4rem
-            }
-            body {
-                background-image: none;
-                background: var(--warm)
-            }
-            .manual-img .img-caption {
-                font-size: 0.55rem;
-                padding: 5px 8px
-            }
-            .img-row {
-                grid-template-columns: 1fr
-            }
-            .diagram-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 6px
-            }
-            .diagram-item {
-                padding: 8px 4px;
-                font-size: 0.65rem
-            }
-        }
-
-        @media print {
-            #sidebar,
-            #header,
-            #overlay,
-            #footer,
-            .hero {
-                display: none !important
-            }
-            #main {
-                margin: 0
-            }
-            #content {
-                max-width: 100%;
-                padding: 20px;
-                box-shadow: none;
-                border: none
-            }
-            body {
-                background: #fff
-            }
-            .section {
-                break-inside: avoid
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rex RL40A — Manuale d'Uso e Manutenzione</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a1a;
+  --ink-faded:#444;
+  --ink-light:#666;
+  --paper:#fbf7f0;
+  --paper-warm:#f5efe6;
+  --paper-dark:#e8dfd0;
+  --paper-card:#fffcf7;
+  --parchment:#fefcf7;
+  --bordeaux:#7b2d3b;
+  --bordeaux-dark:#5c1f2a;
+  --bordeaux-light:#9e4a58;
+  --gold:#b8860b;
+  --gold-light:#d4a843;
+  --gold-faded:#c4956a;
+  --border:#d4c9b8;
+  --alert-bg:#fdf6ec;
+  --alert-border:#e6c9a8;
+  --radius-sm:4px;
+  --radius-md:8px;
+  --radius-lg:16px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.1);
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-sans:'DM Sans',system-ui,sans-serif;
+  --font-mono:'DM Mono',monospace;
+  --nav-w:280px;
+  --header-h:70px;
+}
+html{scroll-behavior:smooth;font-size:18px}
+body{
+  font-family:var(--font-sans);
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--bordeaux);color:#fff}
+a{color:var(--bordeaux);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold)}
+img{max-width:100%;height:auto;display:block}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--header-h);
+  background:var(--parchment);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.header-inner{
+  display:flex;align-items:center;gap:16px;width:100%;
+  max-width:1440px;margin:0 auto;
+}
+.logo-mark{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-display);font-size:1.1rem;
+  color:var(--bordeaux);white-space:nowrap;
+}
+.logo-mark svg{flex-shrink:0}
+.menu-btn{
+  display:none;background:none;border:none;cursor:pointer;
+  padding:8px;margin-left:auto;color:var(--bordeaux);
+}
+.menu-btn svg{display:block}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:fixed;top:var(--header-h);left:0;bottom:0;
+  width:var(--nav-w);background:var(--paper-warm);
+  border-right:1px solid var(--border);
+  overflow-y:auto;z-index:90;padding:24px 0;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.sidebar nav{display:flex;flex-direction:column;gap:2px}
+.sidebar .nav-label{
+  padding:4px 24px 8px;
+  font-family:var(--font-mono);font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--ink-light);font-weight:500;
+}
+.sidebar a{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 24px;font-size:.85rem;font-weight:500;
+  color:var(--ink-faded);border-left:3px solid transparent;
+  transition:all .2s;line-height:1.3;
+}
+.sidebar a:hover,.sidebar a.active{
+  color:var(--bordeaux);background:rgba(123,45,59,.06);
+  border-left-color:var(--bordeaux);
+}
+.sidebar a .num{
+  font-family:var(--font-mono);font-size:.7rem;
+  color:var(--gold-faded);min-width:24px;font-weight:400;
+}
+
+/* ===== MAIN ===== */
+.main-wrap{
+  margin-top:var(--header-h);margin-left:var(--nav-w);
+  min-height:calc(100vh - var(--header-h));
+}
+.content{
+  max-width:880px;margin:0 auto;padding:48px 48px 80px;
+}
+
+/* ===== HERO ===== */
+#hero{
+  padding:80px 48px 64px;background:var(--paper-warm);
+  border-bottom:1px solid var(--border);position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 80% 40%, rgba(123,45,59,.04) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 40% at 20% 60%, rgba(184,134,11,.04) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{max-width:880px;margin:0 auto;position:relative;z-index:1}
+.hero-sup{
+  font-family:var(--font-mono);font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.18em;
+  color:var(--gold-faded);margin-bottom:12px;
+}
+#hero h1{
+  font-family:var(--font-display);font-size:3rem;
+  font-weight:400;line-height:1.15;color:var(--bordeaux-dark);
+  max-width:700px;
+}
+#hero h1 em{font-style:italic}
+.hero-desc{
+  font-size:1.05rem;color:var(--ink-faded);
+  margin-top:16px;max-width:600px;line-height:1.7;
+}
+.hero-meta{
+  display:flex;gap:32px;margin-top:28px;font-size:.85rem;
+  color:var(--ink-light);
+}
+.hero-meta span{display:flex;align-items:center;gap:6px}
+.hero-meta .tag{
+  display:inline-block;padding:2px 10px;border-radius:3px;
+  background:var(--paper-dark);font-family:var(--font-mono);
+  font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;
+}
+
+/* ===== SECTIONS ===== */
+section{padding:0 0 48px;position:relative}
+section:not(:last-of-type)::after{
+  content:'';display:block;width:60px;height:2px;
+  background:var(--border);margin:0 auto;margin-top:48px;
+}
+.section-header{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:24px;padding-top:24px;
+}
+.section-num{
+  font-family:var(--font-mono);font-size:.75rem;
+  color:var(--gold-faded);font-weight:500;white-space:nowrap;
+}
+h2{
+  font-family:var(--font-display);font-size:1.75rem;
+  font-weight:400;color:var(--bordeaux-dark);line-height:1.25;
+}
+h3{
+  font-family:var(--font-display);font-size:1.25rem;
+  font-weight:400;color:var(--ink);margin:24px 0 12px;
+}
+p{margin-bottom:16px;color:var(--ink-faded)}
+
+/* ===== ALERTS ===== */
+.alert{
+  padding:16px 20px;border-radius:var(--radius-md);
+  background:var(--alert-bg);border-left:4px solid var(--alert-border);
+  margin:20px 0;font-size:.9rem;
+}
+.alert strong{color:var(--bordeaux-dark)}
+.alert.warn{border-left-color:var(--gold);background:#fef9ef}
+.alert.info{border-left-color:var(--bordeaux-light)}
+
+/* ===== TABLES ===== */
+.table-wrap{overflow-x:auto;margin:20px 0;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:var(--paper-card)}
+thead{background:var(--paper-dark)}
+th{padding:12px 16px;text-align:left;font-weight:600;color:var(--ink);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+td{padding:10px 16px;border-top:1px solid var(--border);color:var(--ink-faded)}
+tr:nth-child(even) td{background:#fbf8f2}
+
+/* ===== SYMBOLS GRID ===== */
+.symbol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;margin:20px 0}
+.symbol-card{background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:center}
+.symbol-card .icon{font-size:1.6rem;margin-bottom:6px}
+.symbol-card .label{font-size:.75rem;color:var(--ink-faded);font-weight:500}
+.symbol-card .sub{font-size:.7rem;color:var(--ink-light);margin-top:2px}
+
+/* ===== STEPS ===== */
+.steps{counter-reset:step;margin:20px 0}
+.step{padding:16px 20px 16px 56px;position:relative;margin-bottom:8px;background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius-md)}
+.step::before{
+  counter-increment:step;content:counter(step);
+  position:absolute;left:16px;top:16px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--bordeaux);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.75rem;font-weight:600;
+}
+.step strong{color:var(--bordeaux-dark)}
+
+/* ===== IMAGE BLOCK ===== */
+.img-block{margin:24px 0;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border);background:var(--paper-card)}
+.img-block img{width:100%}
+.img-block .cap{padding:10px 16px;font-size:.78rem;color:var(--ink-light);font-family:var(--font-mono);border-top:1px solid var(--border)}
+
+/* ===== GRID 2-COL ===== */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+
+/* ===== OVERLAY ===== */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:80;backdrop-filter:blur(2px)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  :root{--nav-w:240px;font-size:16px}
+  .content{padding:32px 28px 60px}
+  #hero{padding:56px 28px 44px}
+  #hero h1{font-size:2.2rem}
+}
+@media(max-width:768px){
+  :root{font-size:15px;--header-h:60px}
+  .menu-btn{display:flex}
+  .sidebar{
+    transform:translateX(-100%);
+  }
+  .sidebar.open{transform:translateX(0)}
+  .overlay{display:block;opacity:0;pointer-events:none;transition:opacity .35s}
+  .overlay.show{opacity:1;pointer-events:auto}
+  .main-wrap{margin-left:0}
+  .content{padding:24px 18px 48px}
+  #hero{padding:40px 18px 32px}
+  #hero h1{font-size:1.8rem}
+  .hero-meta{flex-wrap:wrap;gap:16px}
+  .grid-2{grid-template-columns:1fr}
+  .sidebar a{font-size:1rem;padding:12px 20px}
+  .sidebar .nav-label{padding:6px 20px 10px}
+  h2{font-size:1.4rem}
+  h3{font-size:1.1rem}
+  .table-wrap{font-size:.95rem}
+  td,th{padding:10px 12px}
+  .symbol-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+}
+@media(max-width:480px){
+  #hero h1{font-size:1.5rem}
+  .hero-desc{font-size:.95rem}
+  .step{padding:14px 16px 14px 48px}
+  .step::before{width:24px;height:24px;font-size:.65rem;left:12px;top:14px}
+  .content{padding:18px 14px 36px}
+  #hero{padding:32px 14px 24px}
+  h2{font-size:1.25rem}
+}
+</style>
 </head>
-
 <body>
-    <header id="header">
-        <div class="brand">
-            <div class="brand-mark">R</div>
-            <div class="brand-text">RL40A<br><span>Manuale d'Uso e Installazione</span></div>
-        </div>
-        <div id="search-wrap">
-            <svg id="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.35-4.35" />
-            </svg>
-            <input type="text" id="search" placeholder="Cerca nel manuale…" autocomplete="off">
-            <div id="search-results"></div>
-        </div>
-        <button id="toggle-nav" onclick="toggleSidebar()">&#9776;</button>
-    </header>
 
-    <nav id="sidebar">
-        <div class="nav-sec">
-            <div class="nav-sec-title">Generale</div>
-            <a class="nav-item" href="#info">Informazioni Importanti</a>
-            <a class="nav-item" href="#indice">Indice</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Sicurezza</div>
-            <a class="nav-item" href="#avvertenze">Avvertenze di Sicurezza</a>
-            <a class="nav-item nav-sub" href="#sicurezza-bambini">Sicurezza bambini</a>
-            <a class="nav-item nav-sub" href="#smaltimento">Smaltimento</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Installazione</div>
-            <a class="nav-item" href="#installazione">Installazione</a>
-            <a class="nav-item nav-sub" href="#rimozione-trasporto">Rimozione dispositivi trasporto</a>
-            <a class="nav-item nav-sub" href="#posizionamento">Posizionamento e livellamento</a>
-            <a class="nav-item nav-sub" href="#acqua">Alimentazione acqua</a>
-            <a class="nav-item nav-sub" href="#scarico">Scarico</a>
-            <a class="nav-item nav-sub" href="#elettrico">Collegamento elettrico</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Descrizione</div>
-            <a class="nav-item" href="#descrizione">Descrizione della Macchina</a>
-            <a class="nav-item nav-sub" href="#componenti">Componenti principali</a>
-            <a class="nav-item nav-sub" href="#cassetto">Cassetto detersivo</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Uso</div>
-            <a class="nav-item" href="#pannello">Pannello Comandi</a>
-            <a class="nav-item nav-sub" href="#comandi">Descrizione comandi</a>
-            <a class="nav-item nav-sub" href="#sequenza">Sequenza operazioni</a>
-            <a class="nav-item nav-sub" href="#fine">Fine programma</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Consigli</div>
-            <a class="nav-item" href="#consigli">Consigli per il Lavaggio</a>
-            <a class="nav-item nav-sub" href="#cernita">Cernita e temperature</a>
-            <a class="nav-item nav-sub" href="#carichi">Carichi biancheria</a>
-            <a class="nav-item nav-sub" href="#macchie">Eliminazione macchie</a>
-            <a class="nav-item nav-sub" href="#detersivi">Detersivi e additivi</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Programmi</div>
-            <a class="nav-item" href="#tabella">Tabella Programmi</a>
-            <a class="nav-item nav-sub" href="#cotone">Cotone e lino</a>
-            <a class="nav-item nav-sub" href="#delicati">Delicati e sintetici</a>
-            <a class="nav-item nav-sub" href="#simboli">Simboli trattamento tessuti</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Manutenzione</div>
-            <a class="nav-item" href="#manutenzione">Manutenzione</a>
-            <a class="nav-item nav-sub" href="#guarnizione">Guarnizione oblò</a>
-            <a class="nav-item nav-sub" href="#cassetto-pulizia">Pulizia cassetto</a>
-            <a class="nav-item nav-sub" href="#filtrino">Filtrino alimentazione</a>
-            <a class="nav-item nav-sub" href="#scarico-pulizia">Pulizia zona scarico</a>
-            <a class="nav-item nav-sub" href="#emergenza">Scarico emergenza</a>
-            <a class="nav-item nav-sub" href="#gelo">Precauzioni antigelo</a>
-        </div>
-        <div class="nav-sec">
-            <div class="nav-sec-title">Altro</div>
-            <a class="nav-item" href="#anomalie">Anomalie di Funzionamento</a>
-            <a class="nav-item" href="#assistenza">Assistenza e Ricambi</a>
-            <a class="nav-item" href="#ricambi">Ricambi Originali</a>
-            <a class="nav-item" href="#dati-tecnici">Dati Tecnici</a>
-            <a class="nav-item" href="#esperienza">Esperienze Utenti</a>
-        </div>
-    </nav>
-    <div id="overlay" onclick="toggleSidebar()"></div>
-
-    <!-- HERO -->
-    <div id="hero"
-        style="margin-left:var(--sb);margin-top:var(--hh);background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);padding:0;overflow:hidden;position:relative">
-        <div style="max-width:1100px;margin:0 auto;padding:56px 72px;display:flex;align-items:center;gap:56px">
-            <div style="flex:1">
-                <p
-                    style="font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--red);margin-bottom:12px">
-                    Rex — Eletrolux Group</p>
-                <h2
-                    style="font-family:var(--serif);font-size:2.8rem;font-style:italic;color:#fff;margin-bottom:8px;line-height:1.1">
-                    RL40A</h2>
-                <p style="font-family:var(--mono);font-size:0.75rem;color:rgba(255,255,255,0.5);margin-bottom:20px">
-                    Lavatrice carica frontale · 400 giri/min · ECO AVANT · 5 kg</p>
-                <div style="display:flex;gap:24px;flex-wrap:wrap">
-                    <div>
-                        <p
-                            style="font-family:var(--mono);font-size:0.6rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">
-                            Carico max</p>
-                        <p style="font-size:1.1rem;color:#fff;font-weight:600">5 kg</p>
-                    </div>
-                    <div>
-                        <p
-                            style="font-family:var(--mono);font-size:0.6rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">
-                            Centrifuga</p>
-                        <p style="font-size:1.1rem;color:#fff;font-weight:600">400 giri/min</p>
-                    </div>
-                    <div>
-                        <p
-                            style="font-family:var(--mono);font-size:0.6rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">
-                            Potenza</p>
-                        <p style="font-size:1.1rem;color:#fff;font-weight:600">2250 W</p>
-                    </div>
-                    <div>
-                        <p
-                            style="font-family:var(--mono);font-size:0.6rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">
-                            Consumo</p>
-                        <p style="font-size:1.1rem;color:#fff;font-weight:600">0,95 kWh</p>
-                    </div>
-                </div>
-            </div>
-            <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red)"></div>
-        </div>
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="logo-mark">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="2" y="10" width="24" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="14" cy="18" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M8 10V7a6 6 0 0 1 12 0v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="18" r="1.5" fill="currentColor"/>
+      </svg>
+      Rex RL40A
     </div>
+    <button class="menu-btn" id="menuToggle" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== OVERLAY ===== -->
+<div class="overlay" id="overlay"></div>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <div class="nav-label">Indice</div>
+    <a href="#hero"><span class="num">00</span>Introduzione</a>
+    <a href="#sicurezza"><span class="num">01</span>Sicurezza</a>
+    <a href="#installazione"><span class="num">02</span>Installazione</a>
+    <a href="#pannello"><span class="num">03</span>Pannello Comandi</a>
+    <a href="#primo-ciclo"><span class="num">04</span>Primo Ciclo</a>
+    <a href="#programmi"><span class="num">05</span>Programmi</a>
+    <a href="#cotone"><span class="num">06</span>Cotone</a>
+    <a href="#delicati"><span class="num">07</span>Delicati</a>
+    <a href="#consigli"><span class="num">08</span>Consigli Lavaggio</a>
+    <a href="#macchie"><span class="num">09</span>Guida Macchie</a>
+    <a href="#durezza"><span class="num">10</span>Durezza Acqua</a>
+    <a href="#pulizia"><span class="num">11</span>Pulizia</a>
+    <a href="#manutenzione"><span class="num">12</span>Manutenzione</a>
+    <a href="#ricambi"><span class="num">13</span>Ricambi Originali</a>
+    <a href="#dati-tecnici"><span class="num">14</span>Dati Tecnici</a>
+    <a href="#esperienza"><span class="num">15</span>Dall'Esperienza</a>
+  </nav>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main-wrap">
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-sup">Manuale d'Uso e Manutenzione</div>
+      <h1>Rex <em>RL40A</em></h1>
+      <p class="hero-desc">Guida completa all'uso, manutenzione e risoluzione dei problemi per la lavatrice Rex RL40A. Include programmi di lavaggio, dati tecnici e ricambi originali.</p>
+      <div class="hero-meta">
+        <span><span class="tag">Modello</span> RL40A</span>
+        <span><span class="tag">Classe</span> A+++</span>
+        <span><span class="tag">Capacità</span> 7 kg</span>
+        <span><span class="tag">Giri</span> 1200 rpm</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- 01 SICUREZZA -->
+    <section id="sicurezza">
+      <div class="section-header"><span class="section-num">01</span><h2>Sicurezza</h2></div>
+      <p>Leggere attentamente le istruzioni prima dell'installazione e del primo utilizzo. Conservare il manuale per future consultazioni.</p>
+      <div class="alert warn"><strong>Attenzione:</strong> Non utilizzare mai la lavatrice se il cavo di alimentazione è danneggiato. Non tentare riparazioni fai-da-te.</div>
+      <div class="alert info"><strong>Nota:</strong> L'apparecchio può essere utilizzato da bambini di età ≥8 anni e da persone con ridotte capacità fisiche, purché supervisionati.</div>
+      <div class="alert"><strong>Ricorda:</strong> Non caricare capi trattati con solventi infiammabili. Scollegare sempre la lavatrice prima della pulizia.</div>
+    </section>
+
+    <!-- 02 INSTALLAZIONE -->
+    <section id="installazione">
+      <div class="section-header"><span class="section-num">02</span><h2>Installazione</h2></div>
+      <p>L'installazione deve essere eseguita da personale qualificato. Posizionare la lavatrice su una superficie piana e stabile.</p>
+      <div class="steps">
+        <div class="step"><strong>Rimozione imballo:</strong> Rimuovere la pellicola protettiva e i fermi di trasporto.</div>
+        <div class="step"><strong>Livellamento:</strong> Regolare i piedini per garantire stabilità e ridurre vibrazioni.</div>
+        <div class="step"><strong>Allacci idrici:</strong> Collegare il tubo di carico alla presa d'acqua (3/4"). Aprire il rubinetto.</div>
+        <div class="step"><strong>Scarico:</strong> Fissare il tubo di scarico al sifone o al bordo del lavello.</div>
+        <div class="step"><strong>Alimentazione:</strong> Collegare la spina a una presa con messa a terra (230 V ~ 50 Hz).</div>
+      </div>
+      <div class="alert warn">Non utilizzare prolunghe o adattatori multipli. La presa deve essere facilmente accessibile.</div>
+    </section>
+
+    <!-- 03 PANNELLO -->
+    <section id="pannello">
+      <div class="section-header"><span class="section-num">03</span><h2>Pannello Comandi</h2></div>
+      <div class="img-block">
+        <img src="images/rl40a_page_04.png" alt="Pannello comandi RL40A">
+        <div class="cap">Pannello comandi — Rex RL40A</div>
+      </div>
+      <p>La pulsantiera e la manopola selettrice consentono di impostare il programma desiderato e le opzioni di lavaggio.</p>
+      <div class="grid-2">
+        <div class="alert info"><strong>Manopola:</strong> Seleziona il programma (Cotone, Sintetici, Delicati, Lana, Rapido, ecc.)</div>
+        <div class="alert info"><strong>Display:</strong> Mostra tempo residuo, temperatura, centrifuga e opzioni attive.</div>
+      </div>
+    </section>
+
+    <!-- 04 PRIMO CICLO -->
+    <section id="primo-ciclo">
+      <div class="section-header"><span class="section-num">04</span><h2>Primo Ciclo</h2></div>
+      <p>Prima del primo lavaggio con biancheria, eseguire un ciclo a vuoto per pulire l'interno della macchina.</p>
+      <div class="steps">
+        <div class="step"><strong>Caricare:</strong> Nessun carico — macchina vuota.</div>
+        <div class="step"><strong>Detersivo:</strong> Versare ½ misurino di detersivo nella vaschetta.</div>
+        <div class="step"><strong>Programma:</strong> Selezionare il programma Cotone a 90 °C.</div>
+        <div class="step"><strong>Avvio:</strong> Premere il tasto Start/Pausa e attendere il completamento.</div>
+      </div>
+    </section>
+
+    <!-- 05 PROGRAMMI -->
+    <section id="programmi">
+      <div class="section-header"><span class="section-num">05</span><h2>Programmi di Lavaggio</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Programma</th><th>Temp.</th><th>Giri</th><th>Durata</th><th>Carico max</th></tr></thead>
+          <tbody>
+            <tr><td>Cotone</td><td>40–90 °C</td><td>1200 rpm</td><td>110–165 min</td><td>7 kg</td></tr>
+            <tr><td>Cotone Eco</td><td>20–60 °C</td><td>1200 rpm</td><td>159–205 min</td><td>7 kg</td></tr>
+            <tr><td>Sintetici</td><td>40–60 °C</td><td>900 rpm</td><td>75–100 min</td><td>3 kg</td></tr>
+            <tr><td>Delicati</td><td>30–40 °C</td><td>600 rpm</td><td>55–80 min</td><td>2 kg</td></tr>
+            <tr><td>Lana</td><td>30–40 °C</td><td>600 rpm</td><td>45–60 min</td><td>1.5 kg</td></tr>
+            <tr><td>Rapido 30'</td><td>30 °C</td><td>800 rpm</td><td>30 min</td><td>2 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06 COTONE -->
+    <section id="cotone">
+      <div class="section-header"><span class="section-num">06</span><h2>Programma Cotone</h2></div>
+      <p>Il programma Cotone è ideale per biancheria resistente al calore (lenzuola, asciugamani, biancheria intima).</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opzione</th><th>40 °C</th><th>60 °C</th><th>90 °C</th></tr></thead>
+          <tbody>
+            <tr><td>Durata</td><td>110 min</td><td>130 min</td><td>165 min</td></tr>
+            <tr><td>Acqua (L)</td><td>59</td><td>64</td><td>72</td></tr>
+            <tr><td>Energia (kWh)</td><td>0.65</td><td>1.05</td><td>1.85</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="img-block">
+        <img src="images/rl40a_page_05.png" alt="Programma Cotone">
+        <div class="cap">Dettaglio programma Cotone</div>
+      </div>
+    </section>
+
+    <!-- 07 DELICATI -->
+    <section id="delicati">
+      <div class="section-header"><span class="section-num">07</span><h2>Programma Delicati</h2></div>
+      <p>Per capi in tessuti sintetici leggeri, misti e seta. Centrifuga a velocità ridotta per proteggere i tessuti.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opzione</th><th>30 °C</th><th>40 °C</th></tr></thead>
+          <tbody>
+            <tr><td>Durata</td><td>55 min</td><td>80 min</td></tr>
+            <tr><td>Acqua (L)</td><td>50</td><td>55</td></tr>
+            <tr><td>Energia (kWh)</td><td>0.35</td><td>0.55</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 08 CONSIGLI -->
+    <section id="consigli">
+      <div class="section-header"><span class="section-num">08</span><h2>Consigli di Lavaggio</h2></div>
+      <h3>Simboli di Manutenzione</h3>
+      <div class="symbol-grid">
+        <div class="symbol-card"><div class="icon">🫧</div><div class="label">Lavaggio max 95 °C</div><div class="sub">Cotone/Lino</div></div>
+        <div class="symbol-card"><div class="icon">🧺</div><div class="label">Lavaggio max 60 °C</div><div class="sub">Sintetici</div></div>
+        <div class="symbol-card"><div class="icon">🌡️</div><div class="label">Lavaggio max 40 °C</div><div class="sub">Delicati</div></div>
+        <div class="symbol-card"><div class="icon">🧤</div><div class="label">Lavaggio a mano</div><div class="sub">30 °C max</div></div>
+        <div class="symbol-card"><div class="icon">❌</div><div class="label">Non lavare</div><div class="sub">Solo chimica</div></div>
+        <div class="symbol-card"><div class="icon">☀️</div><div class="label">Asciugatura naturale</div><div class="sub">Stendere all'ombra</div></div>
+      </div>
+      <div class="alert">Separare sempre i capi bianchi da quelli colorati. Chiudere cerniere e bottoni prima del lavaggio.</div>
+    </section>
+
+    <!-- 09 MACCHIE -->
+    <section id="macchie">
+      <div class="section-header"><span class="section-num">09</span><h2>Guida alle Macchie</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Macchia</th><th>Trattamento</th><th>Temp.</th></tr></thead>
+          <tbody>
+            <tr><td>Vino rosso</td><td>Immergere in acqua fredda, applicare sale o aceto bianco</td><td>40 °C</td></tr>
+            <tr><td>Erba</td><td>Trattare con alcool denaturato, poi lavare con smacchiatore ossigenato</td><td>60 °C</td></tr>
+            <tr><td>Sangue</td><td>Sciacquare immediatamente in acqua fredda, non usare acqua calda</td><td>30 °C</td></tr>
+            <tr><td>Grasso/Olio</td><td>Applicare talco o detersivo liquido, lasciare agire 15 min</td><td>40 °C</td></tr>
+            <tr><td>Caffè/Tè</td><td>Immergere in acqua tiepida con bicarbonato, poi lavaggio normale</td><td>60 °C</td></tr>
+            <tr><td>Cioccolato</td><td>Spazzolare via il secco, pretrattare con detersivo liquido</td><td>40 °C</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10 DUREZZA -->
+    <section id="durezza">
+      <div class="section-header"><span class="section-num">10</span><h2>Durezza dell'Acqua</h2></div>
+      <p>La durezza dell'acqua influisce sul consumo di detersivo. Regolare il dosaggio in base alla scala di durezza.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Livello</th><th>°dH</th><th>mmol/L</th><th>Detersivo</th></tr></thead>
+          <tbody>
+            <tr><td>Morbida</td><td>0–8</td><td>0–1.4</td><td>Ridurre del 20%</td></tr>
+            <tr><td>Media</td><td>9–14</td><td>1.5–2.5</td><td>Dosaggio normale</td></tr>
+            <tr><td>Media</td><td>15–21</td><td>2.6–3.7</td><td>Dosaggio normale</td></tr>
+            <tr><td>Molto dura</td><td>>21</td><td>>3.7</td><td>Aumentare del 20%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 11 PULIZIA -->
+    <section id="pulizia">
+      <div class="section-header"><span class="section-num">11</span><h2>Pulizia</h2></div>
+      <div class="steps">
+        <div class="step"><strong>Vaschetta detersivo:</strong> Estrarre la vaschetta, sciacquare sotto acqua corrente e rimontare.</div>
+        <div class="step"><strong>Filtro pompa:</strong> Svitare il tappo del filtro, rimuovere residui e riavvitare.</div>
+        <div class="step"><strong>Gomma oblò:</strong> Pulire con un panno umido per prevenire muffe e cattivi odori.</div>
+        <div class="step"><strong>Cesto:</strong> Eseguire un ciclo di pulizia a 90 °C con sbiancante una volta al mese.</div>
+      </div>
+      <div class="alert warn">Scollegare sempre la lavatrice prima di qualsiasi operazione di pulizia interna.</div>
+    </section>
+
+    <!-- 12 MANUTENZIONE -->
+    <section id="manutenzione">
+      <div class="section-header"><span class="section-num">12</span><h2>Manutenzione</h2></div>
+      <div class="img-block">
+        <img src="images/rl40a_page_09.png" alt="Manutenzione RL40A">
+        <div class="cap">Manutenzione ordinaria — Rex RL40A</div>
+      </div>
+      <p>Controllare periodicamente il tubo di carico per eventuali crepe o perdite. Sostituire il tubo ogni 5 anni.</p>
+      <p>Per la manutenzione straordinaria contattare un centro assistenza autorizzato.</p>
+    </section>
+
+    <!-- 13 RICAMBI -->
+    <section id="ricambi">
+      <div class="section-header"><span class="section-num">13</span><h2>Ricambi Originali</h2></div>
+      <p>Ricambi originali Electrolux per Rex RL40A (codice PNC 91424100801). Disponibili su <a href="https://shop.electrolux.it/ricambi/accessori-e-ricambi/lavatrici/rex/rl40a/" target="_blank" rel="noopener">shop.electrolux.it</a>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ricambio</th><th>Codice</th><th>Prezzo</th></tr></thead>
+          <tbody>
+            <tr><td>Manopola comandi</td><td>1324186043</td><td>€ 35,00</td></tr>
+            <tr><td>Contrappeso cemento 12,5 kg</td><td>1324183043</td><td>€ 44,00</td></tr>
+            <tr><td>Contrappeso cemento 6,7 kg</td><td>1324183042</td><td>€ 39,00</td></tr>
+            <tr><td>Contrappeso plastica 400 g</td><td>1324183041</td><td>€ 12,00</td></tr>
+            <tr><td>Pedana inferiore</td><td>1324183040</td><td>€ 14,00</td></tr>
+            <tr><td>Placca seriale</td><td>1324178045</td><td>€ 12,00</td></tr>
+            <tr><td>Vite gancio sportello (kit)</td><td>1324186040</td><td>€ 10,00</td></tr>
+            <tr><td>Molla gancio sportello</td><td>1324186041</td><td>€ 14,50</td></tr>
+            <tr><td>Gomma oblò</td><td>1324182020</td><td>€ 72,00</td></tr>
+            <tr><td>Sportello oblò completo</td><td>1324182040</td><td>€ 84,00</td></tr>
+            <tr><td>Controportello oblò</td><td>1324182041</td><td>€ 44,00</td></tr>
+            <tr><td>Cerniera sportello</td><td>1324182042</td><td>€ 22,00</td></tr>
+            <tr><td>Scatola portacerniera</td><td>1324182043</td><td>€ 14,50</td></tr>
+            <tr><td>Dado portacerniera</td><td>1324182044</td><td>€ 14,50</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 14 DATI TECNICI -->
+    <section id="dati-tecnici">
+      <div class="section-header"><span class="section-num">14</span><h2>Dati Tecnici</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Parametro</th><th>Valore</th></tr></thead>
+          <tbody>
+            <tr><td>Modello</td><td>Rex RL40A</td></tr>
+            <tr><td>PNC</td><td>91424100801</td></tr>
+            <tr><td>Capacità max</td><td>7 kg</td></tr>
+            <tr><td>Velocità max centrifuga</td><td>1200 rpm</td></tr>
+            <tr><td>Classe energetica</td><td>A+++</td></tr>
+            <tr><td>Tensione</td><td>220–240 V ~ 50 Hz</td></tr>
+            <tr><td>Corrente</td><td>10 A</td></tr>
+            <tr><td>Potenza max assorbita</td><td>2200 W</td></tr>
+            <tr><td>Consumo acqua annuo</td><td>~9500 L</td></tr>
+            <tr><td>Consumo energia annuo</td><td>~175 kWh</td></tr>
+            <tr><td>Pressione acqua</td><td>0.1–1 MPa (1–10 bar)</td></tr>
+            <tr><td>Larghezza</td><td>595 mm</td></tr>
+            <tr><td>Altezza</td><td>850 mm</td></tr>
+            <tr><td>Profondità</td><td>540 mm</td></tr>
+            <tr><td>Peso netto</td><td>~67 kg</td></tr>
+            <tr><td>Lunghezza cavo</td><td>1.5 m</td></tr>
+            <tr><td>Lunghezza tubo carico</td><td>1.2 m</td></tr>
+            <tr><td>Lunghezza tubo scarico</td><td>1.5 m</td></tr>
+            <tr><td>Classe rumorosità</td><td>C (76 dB)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 15 ESPERIENZA -->
+    <section id="esperienza">
+      <div class="section-header"><span class="section-num">15</span><h2>Dall'Esperienza degli Utenti</h2></div>
+      <p>Consigli pratici raccolti da utenti Rex RL40A per ottimizzare il lavaggio e prolungare la vita della macchina.</p>
+
+      <h3>Programmi Consigliati</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Utilizzo</th><th>Programma</th><th>Temp.</th><th>Extra</th></tr></thead>
+          <tbody>
+            <tr><td>Biancheria letto</td><td>Cotone</td><td>60 °C</td><td>Prelavaggio</td></tr>
+            <tr><td>Asciugamani</td><td>Cotone</td><td>60 °C</td><td>Centrifuga max</td></tr>
+            <tr><td>Camicie</td><td>Sintetici</td><td>40 °C</td><td>Centrifuga ridotta</td></tr>
+            <tr><td>Lana</td><td>Lana</td><td>30 °C</td><td>Centrifuga ridotta</td></tr>
+            <tr><td>Poco sporco</td><td>Rapido 30'</td><td>30 °C</td><td>Carico ridotto</td></tr>
+            <tr><td>Misto quotidiano</td><td>Misto</td><td>40 °C</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Detersivo: Dosaggio Consigliato</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Durezza</th><th>Detersivo polvere</th><th>Detersivo liquido</th></tr></thead>
+          <tbody>
+            <tr><td>Morbida (0–8 °dH)</td><td>80 ml</td><td>60 ml</td></tr>
+            <tr><td>Media (9–21 °dH)</td><td>100 ml</td><td>75 ml</td></tr>
+            <tr><td>Molto dura (&gt;21 °dH)</td><td>120 ml</td><td>90 ml</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Marche Detersivo Più Usate</h3>
+      <p>Secondo l'esperienza degli utenti, le marche più efficaci con la RL40A sono: <strong>Bio Presto</strong> (polvere e liquido), <strong>Dash</strong> (capsule), <strong>Neutro</strong> (ipoallergenico), e <strong>Sapone di Marsiglia</strong> (tradizionale).</p>
+
+      <h3>Anticalcare Consigliati</h3>
+      <p>Per la manutenzione dell'RL40A, gli utenti raccomandano l'uso di anticalcare <strong>Bio Presto</strong> o <strong>Cillit Bang</strong>. In alternativa, acido citrico diluito (100 g in 1 L d'acqua) una volta ogni 3 mesi.</p>
+
+      <h3>Pulizia Periodica</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Operazione</th><th>Ogni</th></tr></thead>
+          <tbody>
+            <tr><td>Pulizia filtro pompa</td><td>1–2 mesi</td></tr>
+            <tr><td>Pulizia vaschetta detersivo</td><td>2 mesi</td></tr>
+            <tr><td>Pulizia gomma oblò</td><td>Settimanale</td></tr>
+            <tr><td>Ciclo autopulizia (90 °C)</td><td>1 mese</td></tr>
+            <tr><td>Trattamento anticalcare</td><td>3 mesi</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Errori Comuni</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Errore</th><th>Causa</th><th>Soluzione</th></tr></thead>
+          <tbody>
+            <tr><td>E10</td><td>Mancanza acqua</td><td>Aprire rubinetto, controllare tubo</td></tr>
+            <tr><td>E20</td><td>Scarico ostruito</td><td>Pulire filtro pompa</td></tr>
+            <tr><td>E30</td><td>Sportello non chiuso</td><td>Chiudere correttamente lo sportello</td></tr>
+            <tr><td>E40</td><td>Sovraccarico</td><td>Ridurre il carico di biancheria</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</div><!-- /main-wrap -->
+
+<script>
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+const menuBtn=document.getElementById('menuToggle');
+
+function openMenu(){
+  sidebar.classList.add('open');
+  overlay.classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+  document.body.style.overflow='';
+}
+menuBtn.addEventListener('click',openMenu);
+overlay.addEventListener('click',closeMenu);
+
+// highlight active section & close menu on link click
+const links=sidebar.querySelectorAll('a');
+const sections=document.querySelectorAll('section[id], #hero');
+links.forEach(a=>{
+  a.addEventListener('click',e=>{
+    closeMenu();
+    links.forEach(l=>l.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+// active section observer
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id=entry.target.id;
+      links.forEach(l=>{
+        l.classList.toggle('active',l.getAttribute('href')==='#'+id);
+      });
+    }
+  });
+},{rootMargin:'-30% 0px -40% 0px'});
+sections.forEach(s=>obs.observe(s));
+</script>
 
-    <main id="main">
-            <div id="content">
-
-                <!-- INFORMAZIONI IMPORTANTI -->
-                <section class="section" id="info">
-                    <h1 class="section-title">Informazioni Importanti</h1>
-                    <p>Questo manuale deve essere considerato parte integrante della lavatrice e deve essere allegato all'apparecchio nel caso venga rivenduto.</p>
-                    <p style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-muted);">&copy; Rex — Eletrolux Group. Tutti i diritti riservati.</p>
-                    <div class="manual-img"><img src="images/rl40a_page_01.png" alt="Copertina manuale" loading="lazy">
-                        <div class="img-caption">Pagina 1 — Copertina</div>
-                    </div>
-                    <div class="alert alert-danger">
-                        <div class="alert-title">Pericolo</div>La mancata osservanza di queste istruzioni <strong>causa la morte o gravi lesioni</strong>.
-                    </div>
-                    <div class="alert alert-warning">
-                        <div class="alert-title">Attenzione</div>La mancata osservanza di queste istruzioni <strong>può causare la morte o gravi lesioni</strong>.
-                    </div>
-                    <div class="alert alert-info">
-                        <div class="alert-title">Avvertenza</div>La mancata osservanza di queste istruzioni <strong>può causare lesioni o danni all'apparecchio</strong>.
-                    </div>
-                </section>
-
-                <!-- INDICE -->
-                <section class="section" id="indice">
-                    <h1 class="section-title">Indice</h1>
-                    <p style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-muted);margin-bottom:16px;">Guida alla lettura del manuale</p>
-                    <div class="specs-grid">
-                        <div class="spec-label" style="background:var(--red-soft);color:var(--red);font-weight:600;">&#9655; Informazioni sicurezza</div>
-                        <div class="spec-value" style="background:var(--red-soft);">Norme per l'uso sicuro della macchina</div>
-                        <div class="spec-label" style="background:var(--warm);">&#9655; Consigli e raccomandazioni</div>
-                        <div class="spec-value" style="background:var(--warm);">Per l'uso corretto e le migliori prestazioni</div>
-                        <div class="spec-label" style="background:var(--paper);">&#9655; Informazioni ambiente</div>
-                        <div class="spec-value" style="background:var(--paper);">Protezione dell'ambiente e smaltimento</div>
-                    </div>
-                    <ul>
-                        <li><strong>Avvertenze</strong> — pag. 3</li>
-                        <li><strong>Smaltimento e protezione ambiente</strong> — pag. 4</li>
-                        <li><strong>Caratteristiche tecniche</strong> — pag. 4</li>
-                        <li><strong>Installazione</strong> — pag. 5-6</li>
-                        <li><strong>Descrizione della macchina</strong> — pag. 7</li>
-                        <li><strong>Uso e pannello comandi</strong> — pag. 8-10</li>
-                        <li><strong>Consigli per il lavaggio</strong> — pag. 11-12</li>
-                        <li><strong>Tabella programmi</strong> — pag. 13-14</li>
-                        <li><strong>Simboli trattamento tessuti</strong> — pag. 15</li>
-                        <li><strong>Manutenzione</strong> — pag. 16-17</li>
-                        <li><strong>Anomalie di funzionamento</strong> — pag. 18-19</li>
-                        <li><strong>Assistenza e ricambi</strong> — pag. 19</li>
-                    </ul>
-                    <div class="manual-img"><img src="images/rl40a_page_02.png" alt="Indice" loading="lazy">
-                        <div class="img-caption">Pagina 2 — Indice</div>
-                    </div>
-                </section>
-
-                <!-- AVVERTENZE -->
-                <section class="section" id="avvertenze">
-                    <h1 class="section-title">Avvertenze di Sicurezza</h1>
-                    <p>Leggere attentamente questo libretto d'istruzioni e prestare particolare attenzione alle norme di sicurezza. Conservare questo libretto per future consultazioni e cederlo al nuovo proprietario in caso di cessione della macchina.</p>
-
-                    <h2 class="section-subtitle">Installazione</h2>
-                    <ul>
-                        <li>Controllare all'atto del disimballo che la macchina non sia danneggiata. In caso di dubbio, non metterla in funzione e rivolgersi all'assistenza tecnica.</li>
-                        <li>Questa macchina è <strong>pesante</strong>, fare attenzione nel maneggiarla.</li>
-                        <li>Non è permesso, per motivi di sicurezza, apportare modifiche all'apparecchiatura.</li>
-                        <li>Si deve togliere l'imballo interno della macchina <strong>prima</strong> di utilizzarla. I dispositivi di protezione per il trasporto devono essere rimossi completamente.</li>
-                        <li>Qualsiasi intervento idraulico deve essere effettuato solo da un idraulico qualificato.</li>
-                        <li>Controllare che l'impianto domestico sia in grado di sopportare il carico massimo (2,25 kW).</li>
-                        <li>Dopo l'installazione verificare che la macchina non sia appoggiata sul cavo di alimentazione.</li>
-                    </ul>
-
-                    <h2 class="section-subtitle">Uso</h2>
-                    <ul>
-                        <li>Questa macchina è progettata per uso domestico da persone adulte.</li>
-                        <li>Non avviare mai la macchina se il cavo di alimentazione è danneggiato o se il cruscotto/piano di lavoro presentano danni.</li>
-                        <li>Non estrarre mai la spina tirando il cavo.</li>
-                        <li>Non mettere in macchina capi smacchiati con benzina, alcool, trielina, ecc. — attendere che il prodotto sia evaporato.</li>
-                        <li>Dopo aver caricato la biancheria, assicurarsi che nessun capo rimanga incastrato tra oblò e guarnizione.</li>
-                        <li>Non cercare di riparare la macchina da soli — rivolgersi a un centro di assistenza autorizzato.</li>
-                    </ul>
-                    <div class="manual-img"><img src="images/rl40a_page_03.png" alt="Avvertenze di sicurezza" loading="lazy">
-                        <div class="img-caption">Pagina 3 — Avvertenze di sicurezza</div>
-                    </div>
-
-                    <h3 class="subsection-title" id="sicurezza-bambini">Sicurezza bambini</h3>
-                    <ul>
-                        <li>Fare attenzione che i bambini non si avvicinino alla macchina mentre è in funzione.</li>
-                        <li>I componenti dell'imballaggio (pellicole, polistirolo) possono essere pericolosi per i bambini — pericolo di soffocamento.</li>
-                        <li>Controllare sempre il cesto prima di introdurvi la biancheria.</li>
-                        <li>In caso di smaltimento, tagliare il cavo di alimentazione e rendere la chiusura oblò inservibile.</li>
-                    </ul>
-                </section>
-
-                <!-- SMALTIMENTO -->
-                <section class="section" id="smaltimento">
-                    <h1 class="section-title">Smaltimento e Protezione Ambiente</h1>
-
-                    <h2 class="section-subtitle">Materiali di imballaggio</h2>
-                    <p>I materiali recanti il simbolo di riciclabilità devono essere deposti negli appositi contenitori:</p>
-                    <div class="specs-grid">
-                        <div class="spec-label">&gt;PE&lt;</div>
-                        <div class="spec-value">Polietilene</div>
-                        <div class="spec-label">&gt;PS&lt;</div>
-                        <div class="spec-value">Polistirolo</div>
-                        <div class="spec-label">&gt;PP&lt;</div>
-                        <div class="spec-value">Polipropilene</div>
-                    </div>
-
-                    <h2 class="section-subtitle">Macchina</h2>
-                    <p>Per un corretto smaltimento della vecchia macchina, utilizzare le discariche autorizzate.</p>
-
-                    <div class="manual-img"><img src="images/rl40a_page_04.png" alt="Smaltimento e specifiche tecniche" loading="lazy">
-                        <div class="img-caption">Pagina 4 — Smaltimento e caratteristiche tecniche</div>
-                    </div>
-
-                    <h2 class="section-subtitle">Consigli per il risparmio</h2>
-                    <ul>
-                        <li>Utilizzare il cesto a pieno carico per un lavaggio più economico e meno nocivo per l'ambiente.</li>
-                        <li>Utilizzare il prelavaggio solamente per biancheria molto sporca.</li>
-                        <li>Adattare la dose di detersivo alla durezza dell'acqua, alla quantità di biancheria e al grado di sporco.</li>
-                        <li>Con un adeguato pretrattamento si possono eliminare le macchie resistenti e lavare a temperatura più bassa.</li>
-                    </ul>
-                </section>
-
-                <!-- INSTALLAZIONE -->
-                <section class="section" id="installazione">
-                    <h1 class="section-title">Installazione</h1>
-
-                    <h2 class="section-subtitle" id="rimozione-trasporto">Rimozione dispositivi di sicurezza per il trasporto</h2>
-                    <p>Prima di mettere in funzione la macchina, togliere <strong>tutti</strong> i dispositivi di sicurezza previsti per il trasporto. Conservare tutti i pezzi per un eventuale futuro spostamento.</p>
-                    <div class="img-row">
-                        <div class="manual-img"><img src="images/rl40a_page_05.png" alt="Rimozione dispositivi trasporto" loading="lazy">
-                            <div class="img-caption">Pag. 5 — Rimozione dispositivi trasporto</div>
-                        </div>
-                        <div class="manual-img"><img src="images/rl40a_page_06.png" alt="Scarico e collegamento" loading="lazy">
-                            <div class="img-caption">Pag. 6 — Scarico e collegamento elettrico</div>
-                        </div>
-                    </div>
-                    <div class="steps">
-                        <div class="step">Svitare e togliere (con una chiave) le due viti posteriori in basso. Sfilare i due perni in plastica.</div>
-                        <div class="step">Adagiare la macchina sullo schienale, facendo attenzione a non schiacciare i tubi. Interporre un angolare dell'imballo tra macchina e pavimento.</div>
-                        <div class="step">Togliere il tassello centrale di polistirolo dal fondo della macchina e liberare i due sacchetti in politene.</div>
-                        <div class="step">Sfilare con cura il sacchetto sinistro, tirandolo verso destra e verso il basso.</div>
-                        <div class="step">Sfilare il sacchetto destro, tirandolo verso sinistra e verso l'alto.</div>
-                        <div class="step">Rimettere la macchina in piedi e svitare la restante vite sul retro. Estrarre il relativo perno di plastica.</div>
-                        <div class="step">Tappare tutti i fori con i tappi che si trovano nel sacchetto contenente il libretto istruzioni.</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="posizionamento">Posizionamento e livellamento</h2>
-                    <p>Prima di installare la macchina nella posizione definitiva, ruotare l'estremità del tubo di carico sul retro nella direzione più vicina al rubinetto. Svitare leggermente la ghiera di fissaggio, girare l'estremità del tubo e riavvitare.</p>
-                    <ul>
-                        <li>Installare su un pavimento piatto e duro.</li>
-                        <li>Assicurarsi che la circolazione dell'aria attorno alla macchina non sia impedita da tappeti o moquette.</li>
-                        <li>Mantenere una distanza di almeno <strong>3-5 cm</strong> dai mobili e dal muro.</li>
-                        <li>Livellare accuratamente la macchina svitando o avvitando i piedini regolabili.</li>
-                        <li>Non mettere sotto la macchina cartone, legno o materiali simili per compensare disuguaglianze del pavimento.</li>
-                    </ul>
-
-                    <h2 class="section-subtitle" id="acqua">Alimentazione dell'acqua</h2>
-                    <ul>
-                        <li>Collegare il tubo di alimentazione a un rubinetto di acqua fredda filettato da 3/4".</li>
-                        <li>Non utilizzare vecchi tubi già usati in precedenza.</li>
-                        <li>Non allungare il tubo di alimentazione — se troppo corto, acquistare un tubo completo più lungo.</li>
-                    </ul>
-                    <div class="specs-grid">
-                        <div class="spec-label">Pressione acqua min.</div>
-                        <div class="spec-value">50 kPa</div>
-                        <div class="spec-label">Pressione acqua max.</div>
-                        <div class="spec-value">800 kPa</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="scarico">Scarico</h2>
-                    <p>Il tubo di scarico può essere installato in tre modi diversi:</p>
-                    <ul>
-                        <li><strong>Sul bordo di un lavandino</strong> — utilizzare il gomito in plastica fornito. Fissare con spago al rubinetto o al muro.</li>
-                        <li><strong>In una derivazione dello scarico del lavandino</strong> — sopra il sifone, a minimo 60 cm dal suolo.</li>
-                        <li><strong>In una conduttura di scarico</strong> — ad altezza non inferiore a 60 cm e non superiore a 90 cm.</li>
-                    </ul>
-                    <div class="alert alert-warning">
-                        <div class="alert-title">Importante</div>Il tubo di scarico deve rimanere agganciato al supporto nella parte superiore dello schienale. Se il tubo è troppo corto, è possibile allungarlo con un tubo/prolunga (max 2 metri).
-                    </div>
-
-                    <h2 class="section-subtitle" id="elettrico">Collegamento elettrico</h2>
-                    <div class="specs-grid">
-                        <div class="spec-label">Tensione/Frequenza</div>
-                        <div class="spec-value">220-230V / 50 Hz</div>
-                        <div class="spec-label">Potenza massima assorbita</div>
-                        <div class="spec-value">2250 W</div>
-                        <div class="spec-label">Corrente minima fusibile</div>
-                        <div class="spec-value">10 A</div>
-                    </div>
-                    <div class="alert alert-danger">
-                        <div class="alert-title">Pericolo</div>Collegare la macchina ad una presa di corrente con messa a terra. Il costruttore declina qualsiasi responsabilità per danni o lesioni causati dal mancato rispetto di questa norma. Il cavo di alimentazione deve essere accessibile dopo l'installazione.
-                    </div>
-                </section>
-
-                <!-- DESCRIZIONE -->
-                <section class="section" id="descrizione">
-                    <h1 class="section-title">Descrizione della Macchina</h1>
-                    <p>Questa macchina è dotata del dispositivo <strong>ECO AVANT</strong> che consente l'utilizzo totale del detersivo da parte della macchina e riduce il consumo di acqua e di energia elettrica.</p>
-                    <div class="manual-img"><img src="images/rl40a_page_07.png" alt="Descrizione macchina" loading="lazy">
-                        <div class="img-caption">Pagina 7 — Descrizione della macchina</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="componenti">Componenti principali</h2>
-                    <div class="diagram">
-                        <div class="diagram-title">Vista d'insieme</div>
-                        <div class="diagram-grid">
-                            <div class="diagram-item"><span class="num">01</span><span class="label">Cassetto detersivo</span></div>
-                            <div class="diagram-item"><span class="num">02</span><span class="label">Guida programmi</span></div>
-                            <div class="diagram-item"><span class="num">03</span><span class="label">Pannello comandi</span></div>
-                            <div class="diagram-item"><span class="num">04</span><span class="label">Maniglia oblò</span></div>
-                            <div class="diagram-item"><span class="num">05</span><span class="label">Pompa scarico</span></div>
-                            <div class="diagram-item"><span class="num">06</span><span class="label">Piedini regolabili</span></div>
-                        </div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="cassetto">Cassetto detersivo</h2>
-                    <div class="specs-grid">
-                        <div class="spec-label" style="font-size:1rem;text-align:center;">I</div>
-                        <div class="spec-value">Prelavaggio</div>
-                        <div class="spec-label" style="font-size:1rem;text-align:center;">II</div>
-                        <div class="spec-value">Lavaggio</div>
-                        <div class="spec-label" style="font-size:1rem;text-align:center;">&#9826;</div>
-                        <div class="spec-value">Ammorbidenti (non superare il piano MAX)</div>
-                        <div class="spec-label" style="font-size:1rem;text-align:center;">&#9851;</div>
-                        <div class="spec-value">Candeggina (non superare il piano MAX)</div>
-                    </div>
-                </section>
-
-                <!-- PANNELLO COMANDI -->
-                <section class="section" id="pannello">
-                    <h1 class="section-title">Pannello Comandi</h1>
-
-                    <div class="manual-img"><img src="images/rl40a_page_08.png" alt="Pannello comandi" loading="lazy">
-                        <div class="img-caption">Pagina 8 — Pannello comandi</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="comandi">Descrizione dei comandi</h2>
-
-                    <div class="specs-grid">
-                        <div class="spec-label">Cassetto detersivo e scheda programmi</div>
-                        <div class="spec-value">Vano per detersivo e guida programmi di lavaggio</div>
-                        <div class="spec-label">Tasto &#9655; avvio/arresto</div>
-                        <div class="spec-value">Premere per avviare; rilasciare per interrompere o spegnere</div>
-                        <div class="spec-label">Lampada spia funzionamento</div>
-                        <div class="spec-value">Si accende all'avvio, si spegne a fine programma</div>
-                        <div class="spec-label">Tasto &#8531; mezzo carico</div>
-                        <div class="spec-value">Per carico ridotto cotone (max 2,5 kg) — 3 risciacqui invece di 4</div>
-                        <div class="spec-label">Tasto esclusione centrifuga</div>
-                        <div class="spec-value">Esclude centrifughe nei programmi cotone e lino</div>
-                        <div class="spec-label">Tasto anti piega</div>
-                        <div class="spec-value">Blocca scarico ultimo risciacquo per sintetici/delicati</div>
-                        <div class="spec-label">Selettore temperature</div>
-                        <div class="spec-value">Manopola per scegliere temperatura lavaggio. Posizione &#10052; = freddo</div>
-                        <div class="spec-label">Selettore programmi</div>
-                        <div class="spec-value">Girare verso destra fino al programma desiderato</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="sequenza">Sequenza delle operazioni</h2>
-                    <div class="alert alert-info">
-                        <div class="alert-title">Primo lavaggio</div>
-                        Versare circa 2 litri di acqua nella vaschetta corrispondente al lavaggio (II) per attivare il dispositivo ECO AVANT. Eseguire poi un ciclo cotone a 60°C senza biancheria con 1/2 misurino di detersivo per togliere eventuali residui di lavorazione.
-                    </div>
-
-                    <h3 class="subsection-title">1. Caricare la biancheria</h3>
-                    <p>Aprire l'oblò, introdurre la biancheria nel cesto un capo alla volta. Distendere la biancheria il più possibile. Chiudere l'oblò.</p>
-
-                    <h3 class="subsection-title">2. Dosare il detersivo</h3>
-                    <p>Estrarre il cassetto fino all'arresto. Versare il detersivo nella vaschetta II (lavaggio). Per prelavaggio, versare anche nella vaschetta I.</p>
-
-                    <h3 class="subsection-title">3. Dosare gli additivi</h3>
-                    <p>Versare l'ammorbidente nello scomparto &#9826; e la candeggina nello scomparto &#9851; (non superare il piano MAX). Chiudere il cassetto delicatamente.</p>
-
-                    <div class="alert alert-warning">
-                        <div class="alert-title">Attenzione</div>Una dose eccessiva di ammorbidente/candeggina o una chiusura troppo violenta del cassetto può causare l'ingresso immediato degli additivi in macchina.
-                    </div>
-
-                    <h3 class="subsection-title">4. Scegliere l'opzione desiderata</h3>
-                    <p>Premere il tasto desiderato in base alle esigenze di lavaggio e al tipo di biancheria.</p>
-
-                    <h3 class="subsection-title">5. Scegliere la temperatura</h3>
-                    <p>Ruotare la manopola temperature sui gradi desiderati.</p>
-
-                    <h3 class="subsection-title">6. Scegliere il programma e avviarlo</h3>
-                    <p>Ruotare la manopola programmi verso destra sul programma prescelto e premere il tasto avvio/arresto &#9655; — la spia di funzionamento si accende e la macchina inizia a funzionare.</p>
-
-                    <div class="img-row">
-                        <div class="manual-img"><img src="images/rl40a_page_09.png" alt="Sequenza operazioni" loading="lazy">
-                            <div class="img-caption">Pag. 9 — Sequenza operazioni</div>
-                        </div>
-                        <div class="manual-img"><img src="images/rl40a_page_10.png" alt="Fine programma" loading="lazy">
-                            <div class="img-caption">Pag. 10 — Fine programma</div>
-                        </div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="fine">7. Fine del programma</h2>
-                    <p>La macchina si ferma automaticamente e la spia di funzionamento si spegne.</p>
-                    <ul>
-                        <li>Se è stato scelto un programma con opzione anti piega, scaricare l'acqua selezionando il programma G (centrifuga breve) o ripremendo lo stesso tasto.</li>
-                        <li>Ripremere il tasto avvio/arresto per spegnere la macchina.</li>
-                        <li>Attendere circa <strong>2 minuti</strong> prima di aprire l'oblò (tempo di sblocco del dispositivo di sicurezza).</li>
-                        <li>Togliere la biancheria e controllare che il cesto sia completamente vuoto.</li>
-                        <li>Si consiglia di chiudere il rubinetto dell'acqua, estrarre la spina e lasciare l'oblò socchiuso per aerare la macchina.</li>
-                    </ul>
-                </section>
-
-                <!-- CONSIGLI LAVAGGIO -->
-                <section class="section" id="consigli">
-                    <h1 class="section-title">Consigli per il Lavaggio</h1>
-
-                    <h2 class="section-subtitle" id="cernita">Cernita</h2>
-                    <ul>
-                        <li>Attenersi ai simboli per il trattamento dei tessuti sulle etichette dei capi.</li>
-                        <li>Suddividere la biancheria: bianchi, colorati, sintetici, delicati, lana.</li>
-                        <li>Capi bianchi e colorati non devono essere lavati assieme.</li>
-                        <li>La biancheria colorata nuova può stingere al primo lavaggio — lavarla a parte la prima volta.</li>
-                        <li>Accertarsi che non rimangano oggetti di metallo (fermagli, spille, spilli).</li>
-                        <li>Abbottonare le federe, chiudere cerniere, ganci e asole.</li>
-                        <li>Raggruppare i capi piccoli (calzini, cinture) in una borsa di tela o federa.</li>
-                        <li>Trattare le tende con cura — togliere i ganci o legarli in una retina.</li>
-                    </ul>
-
-                    <h2 class="section-subtitle">Temperature</h2>
-                    <div class="specs-grid">
-                        <div class="spec-label"><strong>90°C</strong></div>
-                        <div class="spec-value">Capi bianchi di lino o cotone molto sporchi (strofinacci, asciugamani, lenzuola)</div>
-                        <div class="spec-label"><strong>60°C</strong></div>
-                        <div class="spec-value">Capi bianchi cotone normalmente sporchi, colorati che non stingono</div>
-                        <div class="spec-label"><strong>30-40°C / Freddo</strong></div>
-                        <div class="spec-value">Biancheria delicata, colori delicati, misti sintetici e lana</div>
-                    </div>
-                    <p>Il programma ciclo lana è stato approvato da <strong>Woolmark</strong> per il lavaggio dei capi in lana etichettati "lavabile in lavatrice" (Licenza Nr. M9603).</p>
-
-                    <h2 class="section-subtitle" id="carichi">Carichi di biancheria</h2>
-                    <div class="specs-grid">
-                        <div class="spec-label">Cotone, lino</div>
-                        <div class="spec-value">Riempire il cesto senza sovraccaricarlo (max 5 kg)</div>
-                        <div class="spec-label">Sintetici</div>
-                        <div class="spec-value">Non più di metà del cesto (max 2 kg)</div>
-                        <div class="spec-label">Delicati e lana</div>
-                        <div class="spec-value">Non più di un terzo del cesto (max 1 kg lana)</div>
-                    </div>
-
-                    <h3 class="subsection-title">Pesi indicativi della biancheria asciutta</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <tr><th>Capo</th><th>Peso</th></tr>
-                            <tr><td>Accappatoio</td><td>1200 g</td></tr>
-                            <tr><td>Copri piumino</td><td>700 g</td></tr>
-                            <tr><td>Lenzuola</td><td>500 g</td></tr>
-                            <tr><td>Camice da lavoro uomo</td><td>600 g</td></tr>
-                            <tr><td>Pigiami da uomo</td><td>500 g</td></tr>
-                            <tr><td>Tovaglie</td><td>250 g</td></tr>
-                            <tr><td>Federe</td><td>200 g</td></tr>
-                            <tr><td>Asciugamani in spugna</td><td>200 g</td></tr>
-                            <tr><td>Camicie da notte</td><td>200 g</td></tr>
-                            <tr><td>Camicie da uomo</td><td>200 g</td></tr>
-                            <tr><td>Tovaglioli</td><td>100 g</td></tr>
-                            <tr><td>Strofinacci</td><td>100 g</td></tr>
-                            <tr><td>Slip da donna/uomo</td><td>100 g</td></tr>
-                            <tr><td>Camicette</td><td>100 g</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="img-row">
-                        <div class="manual-img"><img src="images/rl40a_page_11.png" alt="Consigli lavaggio" loading="lazy">
-                            <div class="img-caption">Pag. 11 — Consigli per il lavaggio</div>
-                        </div>
-                        <div class="manual-img"><img src="images/rl40a_page_12.png" alt="Macchie e detersivi" loading="lazy">
-                            <div class="img-caption">Pag. 12 — Macchie e detersivi</div>
-                        </div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="macchie">Eliminazione delle macchie</h2>
-                    <div class="table-wrap">
-                        <table>
-                            <tr><th>Macchia</th><th>Trattamento</th></tr>
-                            <tr><td>Sangue</td><td>Acqua fredda se fresco; ammollo notturno con detersivo speciale se asciutto</td></tr>
-                            <tr><td>Colore ad olio</td><td>Benzina detergente, tamponare, trattare più volte</td></tr>
-                            <tr><td>Grasso asciutto</td><td>Trementina, tamponare con panno di cotone</td></tr>
-                            <tr><td>Ruggine</td><td>Sale ossalico sciolto a caldo o antiruggine a freddo</td></tr>
-                            <tr><td>Muffa</td><td>Candeggina, sciacquare bene (solo capi bianchi resistenti al cloro)</td></tr>
-                            <tr><td>Erba</td><td>Insaponare, candeggina diluita (capi bianchi)</td></tr>
-                            <tr><td>Penna biro / Colla</td><td>Acetone (*), tamponare</td></tr>
-                            <tr><td>Rossetto</td><td>Acetone, poi alcool; candeggina su bianchi</td></tr>
-                            <tr><td>Vino rosso</td><td>Ammollo con detersivo, acido acetico/citrico, poi candeggina</td></tr>
-                            <tr><td>Inchiostro</td><td>Acetone (*), poi acido acetico; candeggina su bianchi</td></tr>
-                            <tr><td>Catrame</td><td>Smacchiatore, alcool o benzina; pasta detergente</td></tr>
-                        </table>
-                    </div>
-                    <div class="alert alert-warning">
-                        <div class="alert-title">(*) Attenzione</div>Non usare mai l'acetone sui tessuti artificiali e colorati.
-                    </div>
-
-                    <h2 class="section-subtitle" id="detersivi">Detersivi e additivi</h2>
-                    <p>Un buon risultato di lavaggio dipende dalla scelta del detersivo e dal suo corretto dosaggio. In questa lavatrice si possono usare tutti i detersivi per lavatrici normalmente in commercio:</p>
-                    <ul>
-                        <li>Detersivi in polvere per tutti i tipi di tessuto</li>
-                        <li>Detersivi in polvere per tessuti delicati e lana</li>
-                        <li>Detersivi liquidi per tutti i tipi di tessuto o speciali per lana</li>
-                    </ul>
-                    <p>Il detersivo deve essere versato prima dell'inizio del programma nell'apposita vaschetta o nel dosatore da porre direttamente nel cesto. In caso di detersivo liquido, selezionare un programma senza prelavaggio.</p>
-
-                    <h3 class="subsection-title">Durezza dell'acqua</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <tr><th>Livello</th><th>Caratteristica</th><th>Gradi tedeschi °dH</th><th>Gradi francesi °T.H.</th></tr>
-                            <tr><td>1</td><td>Dolce</td><td>0-7</td><td>0-15</td></tr>
-                            <tr><td>2</td><td>Media</td><td>8-14</td><td>16-25</td></tr>
-                            <tr><td>3</td><td>Resistente</td><td>15-21</td><td>26-37</td></tr>
-                            <tr><td>4</td><td>Molto dura</td><td>&gt; 21</td><td>&gt; 37</td></tr>
-                        </table>
-                    </div>
-                    <p>Utilizzare una quantità minore di detersivo se: si lava poca biancheria, la biancheria è poco sporca, si forma molta schiuma, l'acqua è poco dura.</p>
-                </section>
-
-                <!-- TABELLA PROGRAMMI -->
-                <section class="section" id="tabella">
-                    <h1 class="section-title">Tabella Programmi</h1>
-
-                    <h2 class="section-subtitle" id="cotone">Programmi energici — Cotone e lino</h2>
-                    <p style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-muted);margin-bottom:8px;">Carico massimo: 5 kg</p>
-
-                    <div class="table-wrap">
-                        <table style="font-size:0.72rem;">
-                            <thead>
-                                <tr>
-                                    <th>Progr.</th>
-                                    <th>Tipo di biancheria</th>
-                                    <th>Temp.</th>
-                                    <th>Descrizione del ciclo</th>
-                                    <th>Opzioni</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><strong>A</strong></td><td>Bianchi con prelavaggio — molto sporchi</td><td>30-90°C</td><td>Prelavaggio + lavaggio + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>B</strong></td><td>Bianchi senza prelavaggio — normalmente sporchi</td><td>30-90°C</td><td>Lavaggio + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>A</strong></td><td>Colorati con prelavaggio — molto sporchi</td><td>30-60°C</td><td>Prelavaggio + lavaggio + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>B</strong></td><td>Colorati senza prelavaggio — normalmente sporchi</td><td>30-60°C</td><td>Lavaggio + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>ECO</strong></td><td>Programma economia — bianchi e colorati leggermente sporchi</td><td>60°A</td><td>Lavaggio 60°C + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>C</strong></td><td>Colorati delicati senza prelavaggio — poco sporchi</td><td>-40°C</td><td>Lavaggio + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>C</strong></td><td>Bianchi leggermente sporchi</td><td>60°C</td><td>Lavaggio + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>Daily</strong></td><td>Ciclo breve — biancheria poco sporca</td><td>40°C</td><td>Lavaggio + 4 risciacqui + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>F</strong></td><td>Risciacqui cotone — capi lavati a mano</td><td>—</td><td>4 risciacqui con additivi + centrifuga lunga</td><td>Escl. centrifuga, Mezzo carico</td></tr>
-                                <tr><td><strong>G</strong></td><td>Centrifuga — capi da centrifugare</td><td>—</td><td>Scarico acqua + centrifuga breve</td><td>—</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p style="font-family:var(--mono);font-size:0.68rem;color:var(--ink-muted);margin-top:8px;">Il programma B con selettore temperature posizionato su 60A è il programma di riferimento per i dati contenuti nell'etichetta energia (CEE 92/75).</p>
-
-                    <div class="img-row">
-                        <div class="manual-img"><img src="images/rl40a_page_13.png" alt="Tabella programmi cotone" loading="lazy">
-                            <div class="img-caption">Pag. 13 — Programmi cotone e lino</div>
-                        </div>
-                        <div class="manual-img"><img src="images/rl40a_page_14.png" alt="Tabella programmi delicati" loading="lazy">
-                            <div class="img-caption">Pag. 14 — Programmi delicati</div>
-                        </div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="delicati">Programmi delicati — Sintetici, misti, lana</h2>
-                    <p style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-muted);margin-bottom:8px;">Carico massimo: 2 kg (lana 1 kg)</p>
-
-                    <div class="table-wrap">
-                        <table style="font-size:0.72rem;">
-                            <thead>
-                                <tr>
-                                    <th>Progr.</th>
-                                    <th>Tipo di biancheria</th>
-                                    <th>Temp.</th>
-                                    <th>Descrizione del ciclo</th>
-                                    <th>Opzioni</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><strong>H</strong></td><td>Sintetici/Misti con prelavaggio — molto sporchi</td><td>30-60°C</td><td>Prelavaggio + lavaggio + 3 risciacqui + scarico</td><td>Anti piega</td></tr>
-                                <tr><td><strong>J</strong></td><td>Sintetici/Misti senza prelavaggio — normalmente/poco sporchi</td><td>30-60°C</td><td>Lavaggio + 3 risciacqui + scarico</td><td>Anti piega</td></tr>
-                                <tr><td><strong>Salvacolore</strong></td><td>Sintetici colori delicati senza prelavaggio — normalmente sporchi</td><td>-40°C</td><td>Lavaggio + 3 risciacqui + scarico</td><td>Anti piega</td></tr>
-                                <tr><td><strong>K</strong></td><td>Tessuti delicati, seta — normalmente sporchi</td><td>-40°C</td><td>Lavaggio + 3 risciacqui + scarico</td><td>Anti piega</td></tr>
-                                <tr><td><strong>L</strong></td><td>Lana</td><td>-40°C</td><td>Lavaggio + 3 risciacqui + scarico</td><td>Anti piega</td></tr>
-                                <tr><td><strong>M</strong></td><td>Risciacqui delicati — capi lavati a mano</td><td>—</td><td>3 risciacqui con ammorbidente + scarico</td><td>Anti piega</td></tr>
-                                <tr><td><strong>N</strong></td><td>Scarico</td><td>—</td><td>Scarico dell'acqua</td><td>—</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="alert alert-info">
-                        <div class="alert-title">Anti piega</div>Se selezionata la funzione anti piega, l'acqua dell'ultimo risciacquo non viene scaricata. Per scaricarla, ripremere lo stesso tasto o selezionare il programma G (centrifuga breve).
-                    </div>
-
-                    <div class="manual-img"><img src="images/rl40a_page_15.png" alt="Simboli trattamento tessuti" loading="lazy">
-                        <div class="img-caption">Pagina 15 — Simboli internazionali trattamento tessuti</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="simboli">Simboli internazionali per il trattamento dei tessuti</h2>
-                    <div class="table-wrap">
-                        <table style="font-size:0.72rem;">
-                            <thead>
-                                <tr><th>Simbolo</th><th>Significato</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>95°C &#9679;</td><td>Lavaggio a 95°C — azione normale</td></tr>
-                                <tr><td>60°C &#9679;</td><td>Lavaggio a 60°C — azione normale</td></tr>
-                                <tr><td>40°C &#9679;</td><td>Lavaggio a 40°C — azione normale</td></tr>
-                                <tr><td>30°C &#9679;</td><td>Lavaggio a 30°C — azione normale</td></tr>
-                                <tr><td style="text-decoration:underline;">30°C &#9679;</td><td>Lavaggio delicato</td></tr>
-                                <tr><td>&#9997;</td><td>Lavaggio a mano</td></tr>
-                                <tr><td>&#10007;</td><td>Non lavare</td></tr>
-                                <tr><td>&#9651;</td><td>Si può candeggiare in acqua fredda</td></tr>
-                                <tr><td>&#9651; &#10007;</td><td>Non candeggiare</td></tr>
-                                <tr><td>&#9679;&#9679;&#9679; 200°C</td><td>Stiratura forte (max 200°C)</td></tr>
-                                <tr><td>&#9679;&#9679; 150°C</td><td>Stiratura media (max 150°C)</td></tr>
-                                <tr><td>&#9679; 110°C</td><td>Stiratura leggera (max 110°C)</td></tr>
-                                <tr><td>&#10007;</td><td>Non stirare</td></tr>
-                                <tr><td>&#9711;</td><td>Asciugabile in asciugabiancheria — temperatura normale</td></tr>
-                                <tr><td>&#9711; &#9679;</td><td>Asciugabile in asciugabiancheria — temperatura ridotta</td></tr>
-                                <tr><td>&#9711; &#10007;</td><td>Non asciugare in asciugabiancheria</td></tr>
-                                <tr><td>&#9711; P / F</td><td>Pulitura a secco — indicazioni per solvente/processo</td></tr>
-                                <tr><td>&#9711; &#10007;</td><td>Non pulire a secco</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- MANUTENZIONE -->
-                <section class="section" id="manutenzione">
-                    <h1 class="section-title">Manutenzione</h1>
-                    <div class="alert alert-danger">
-                        <div class="alert-title">Pericolo</div>Prima di qualsiasi operazione di manutenzione e pulizia, staccare la spina dalla presa di corrente.
-                    </div>
-
-                    <div class="img-row">
-                        <div class="manual-img"><img src="images/rl40a_page_16.png" alt="Manutenzione" loading="lazy">
-                            <div class="img-caption">Pag. 16 — Manutenzione</div>
-                        </div>
-                        <div class="manual-img"><img src="images/rl40a_page_17.png" alt="Scarico emergenza" loading="lazy">
-                            <div class="img-caption">Pag. 17 — Scarico emergenza e antigelo</div>
-                        </div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="guarnizione">Guarnizione oblò</h2>
-                    <p>Controllare periodicamente che non ci siano fermagli, bottoni, chiodi o spilli nelle pieghe della guarnizione oblò.</p>
-
-                    <h2 class="section-subtitle">Mobile</h2>
-                    <p>Pulire il mobile con acqua tiepida e detersivo per stoviglie. Sciacquare con acqua pulita e asciugare con uno strofinaccio morbido.</p>
-                    <div class="alert alert-warning">
-                        <div class="alert-title">Importante</div>Non usare alcool, solventi o prodotti similari per la pulizia del mobile.
-                    </div>
-
-                    <h2 class="section-subtitle" id="cassetto-pulizia">Cassetto detersivo</h2>
-                    <p>I detersivi e gli additivi formano incrostazioni a lungo andare. Pulire il cassetto di tanto in tanto passandolo sotto il rubinetto. Per estrarre completamente il cassetto, premere sul tasto in fondo a sinistra. Per pulire più facilmente, è possibile togliere la parte alta delle vaschette riservate agli additivi.</p>
-
-                    <h2 class="section-subtitle" id="filtrino">Filtrino del tubo di alimentazione</h2>
-                    <p>Se la macchina richiede più tempo per riempirsi, verificare che il filtrino del tubo di alimentazione non sia ostruito:</p>
-                    <div class="steps">
-                        <div class="step">Chiudere il rubinetto dell'acqua.</div>
-                        <div class="step">Svitare il tubo dal rubinetto.</div>
-                        <div class="step">Pulire il filtrino con uno spazzolino.</div>
-                        <div class="step">Riavvitare il tubo.</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="scarico-pulizia">Pulizia della zona di scarico</h2>
-                    <p>La zona di scarico deve essere ispezionata se:</p>
-                    <ul>
-                        <li>La macchina non scarica e/o non centrifuga</li>
-                        <li>La macchina fa un rumore strano durante lo scarico (oggetti che bloccano la pompa)</li>
-                    </ul>
-                    <div class="steps">
-                        <div class="step">Staccare la spina dalla presa di corrente.</div>
-                        <div class="step">Se in corso di programma, attendere che l'acqua si raffreddi.</div>
-                        <div class="step">Aprire lo sportellino. Mettere una bacinella sul pavimento.</div>
-                        <div class="step">Estrarre il tubicino di scarico acqua dall'alloggiamento, porlo nella bacinella e togliere il tappo.</div>
-                        <div class="step">Quando l'acqua non fuoriesce più, svitare e togliere il coperchietto della pompa.</div>
-                        <div class="step">Togliere eventuali oggetti dalla pompa, ruotandola.</div>
-                        <div class="step">Rimettere il tappo sul tubicino, riposizionarlo, riavvitare il coperchietto e chiudere lo sportellino.</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="emergenza">Scarico di emergenza dell'acqua</h2>
-                    <p>Se la macchina non scarica:</p>
-                    <div class="steps">
-                        <div class="step">Togliere la spina dalla presa e chiudere il rubinetto dell'acqua.</div>
-                        <div class="step">Attendere che l'acqua si raffreddi (se programma a ≥60°C).</div>
-                        <div class="step">Aprire lo sportellino della zona scarico. Prendere una bacinella.</div>
-                        <div class="step">Inserire l'estremità del tubicino di scarico nella bacinella e scaricare l'acqua a più riprese.</div>
-                        <div class="step">Pulire la pompa come descritto precedentemente.</div>
-                        <div class="step">Rimettere il tappo, riposizionare il tubicino, riavvitare il coperchietto e chiudere lo sportellino.</div>
-                    </div>
-
-                    <h2 class="section-subtitle" id="gelo">Precauzioni contro il gelo</h2>
-                    <p>Se la macchina è installata in un locale dove la temperatura può scendere sotto 0°C:</p>
-                    <div class="steps">
-                        <div class="step">Staccare la spina dalla presa.</div>
-                        <div class="step">Chiudere il rubinetto e svitare il tubo di alimentazione.</div>
-                        <div class="step">Porre le estremità del tubicino di scarico e del tubo di alimentazione in una bacinella e far scaricare l'acqua.</div>
-                        <div class="step">Riavvitare il tubo di alimentazione e rimettere il tubicino di scarico con l'apposito tappo.</div>
-                    </div>
-                    <div class="alert alert-info">
-                        <div class="alert-title">Importante</div>Ogni volta che si scarica l'acqua attraverso il tubicino, versare circa 2 litri di acqua nello scomparto di lavaggio del cassetto e selezionare il programma di scarico per attivare il dispositivo ECO AVANT.
-                    </div>
-                </section>
-
-                <!-- ANOMALIE -->
-                <section class="section" id="anomalie">
-                    <h1 class="section-title">Anomalie di Funzionamento</h1>
-                    <p>Difetti che si possono eliminare senza l'intervento di un tecnico.</p>
-
-                    <div class="img-row">
-                        <div class="manual-img"><img src="images/rl40a_page_18.png" alt="Anomalie" loading="lazy">
-                            <div class="img-caption">Pag. 18 — Anomalie di funzionamento</div>
-                        </div>
-                        <div class="manual-img"><img src="images/rl40a_page_19.png" alt="Assistenza" loading="lazy">
-                            <div class="img-caption">Pag. 19 — Assistenza e ricambi</div>
-                        </div>
-                    </div>
-
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr><th>Anomalia</th><th>Cause possibili</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>La macchina non si mette in moto</strong></td>
-                                    <td>
-                                        <ul style="margin:0 0 0 16px;">
-                                            <li>L'oblò non è ben chiuso</li>
-                                            <li>La macchina non riceve corrente</li>
-                                            <li>Il fusibile dell'impianto domestico è danneggiato</li>
-                                            <li>Il selettore programmi non è posizionato correttamente</li>
-                                            <li>Non è stato premuto il tasto avvio/arresto</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>La macchina non carica acqua</strong></td>
-                                    <td>
-                                        <ul style="margin:0 0 0 16px;">
-                                            <li>Il rubinetto dell'acqua è chiuso</li>
-                                            <li>Non esce acqua dal rubinetto</li>
-                                            <li>Il tubo di alimentazione è incastrato o piegato</li>
-                                            <li>Il filtrino del tubo di alimentazione è ostruito</li>
-                                            <li>L'oblò non è chiuso</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>La macchina carica acqua e la scarica immediatamente</strong></td>
-                                    <td>L'estremità del tubo di scarico si trova troppo in basso rispetto alla macchina</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>La macchina non scarica e/o non centrifuga</strong></td>
-                                    <td>
-                                        <ul style="margin:0 0 0 16px;">
-                                            <li>Il tubo di scarico è incastrato o piegato</li>
-                                            <li>Il tubo di scarico o la pompa sono intasati</li>
-                                            <li>Programma con opzione esclusione centrifuga o anti piega</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>La macchina vibra o fa rumore</strong></td>
-                                    <td>
-                                        <ul style="margin:0 0 0 16px;">
-                                            <li>Protezioni per il trasporto non rimosse</li>
-                                            <li>La macchina è appoggiata contro qualcosa</li>
-                                            <li>I piedini non appoggiano bene al suolo</li>
-                                            <li>Carico non ben distribuito nel cesto</li>
-                                            <li>Poca biancheria nel cesto</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>C'è acqua per terra</strong></td>
-                                    <td>
-                                        <ul style="margin:0 0 0 16px;">
-                                            <li>Troppo detersivo o detersivo non adatto (troppa schiuma)</li>
-                                            <li>Perdite dalle ghiere del tubo di alimentazione</li>
-                                            <li>Tubo di scarico danneggiato</li>
-                                            <li>Tappo pompa di scarico non riavvitato dopo la pulizia</li>
-                                            <li>Tubicino di scarico non ritappato</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Risultato del lavaggio non soddisfacente</strong></td>
-                                    <td>
-                                        <ul style="margin:0 0 0 16px;">
-                                            <li>Poco detersivo o detersivo non adatto</li>
-                                            <li>Macchie difficili non pretrattate</li>
-                                            <li>Temperatura o programma non corretti</li>
-                                            <li>Cesto sovraccarico</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>L'oblò non si apre</strong></td>
-                                    <td>
-                                        <ul style="margin:0 0 0 16px;">
-                                            <li>Programma ancora in corso</li>
-                                            <li>Oblò non ancora sbloccato</li>
-                                            <li>C'è acqua in vasca</li>
-                                            <li>Scaricare l'acqua nei programmi con anti piega</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- ASSISTENZA -->
-                <section class="section" id="assistenza">
-                    <h1 class="section-title">Assistenza e Ricambi</h1>
-                    <p>In caso di guasto, consultare il capitolo "Anomalie di funzionamento" per verificare se il guasto può essere eliminato autonomamente. Se non si riesce a rimediare, rivolgersi al centro di assistenza.</p>
-                    <p>Il servizio di assistenza ed i pezzi di ricambio sono disponibili presso i centri di assistenza o i rivenditori autorizzati.</p>
-                    <div class="alert alert-warning">
-                        <div class="alert-title">Richiesta assistenza</div>In sede di richiesta di assistenza o ordinazione ricambi, è importante indicare il codice del prodotto, il numero di serie e il modello della macchina, riportati sulla targhetta matricola.
-                    </div>
-                    <div class="specs-grid">
-                        <div class="spec-label">Modello</div>
-                        <div class="spec-value">RL40A</div>
-                        <div class="spec-label">Numero di serie</div>
-                        <div class="spec-value">_________________</div>
-                        <div class="spec-label">Codice del prodotto</div>
-                        <div class="spec-value">_________________</div>
-                        <div class="spec-label">Data di acquisto</div>
-                        <div class="spec-value">_________________</div>
-                    </div>
-                    <p style="font-family:var(--mono);font-size:0.72rem;color:var(--ink-muted);">La data di acquisto è riportata sulla ricevuta rilasciata dal negoziante. Conservare tale ricevuta.</p>
-                </section>
-
-                <!-- RICAMBI ORIGINALI -->
-                <section class="section" id="ricambi">
-                    <h1 class="section-title">Ricambi Originali</h1>
-                    <p>Per il modello <strong>RL40</strong> (PNC 914 241 008 01) — Lavatrice 5 kg. Ricambi e accessori originali disponibili presso <a href="https://shop.electrolux.it/search?pnc=91424100801" style="color:var(--red);">shop.electrolux.it</a>. Spedizione gratuita a partire da 30€.</p>
-
-                    <div class="table-wrap">
-                        <table style="font-size:0.75rem;">
-                            <thead>
-                                <tr><th>Categoria</th><th>Ricambio</th><th>Prezzo</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td rowspan="5"><strong>Tubi flessibili</strong></td><td>CLASSIC Tubo scarico 2,5m</td><td>€8,00</td></tr>
-                                <tr><td>CLASSIC Tubo scarico 1,5m</td><td>€6,40</td></tr>
-                                <tr><td>Tubo carico Safety System 1,5m</td><td>€29,60</td></tr>
-                                <tr><td>SAFETY SYSTEM Tubo carico 2,5m</td><td>€33,75</td></tr>
-                                <tr><td>CLASSIC Tubo carico 3,5m</td><td>€8,00</td></tr>
-                                <tr><td rowspan="4"><strong>Tubi carico</strong></td><td>Tubo carico A/Fredda Dritto/Curvo 2,5m</td><td>€11,20</td></tr>
-                                <tr><td>Tubo carico A/Calda Dritto/Curvo 2,5m</td><td>€12,00</td></tr>
-                                <tr><td>Tubo carico A/Calda Dritto/Curvo 1,5m</td><td>€10,40</td></tr>
-                                <tr><td>CLASSIC Tubo carico 1,5m</td><td>€6,40</td></tr>
-                                <tr><td><strong>Filtri</strong></td><td>Sigillo del filtro lavatrice</td><td>€10,40</td></tr>
-                                <tr><td><strong>Filtri</strong></td><td>Copri filtro pompa lavatrice</td><td>€5,95</td></tr>
-                                <tr><td><strong>Motori e Pompe</strong></td><td>Bullone ammortizzatore 14,3x72</td><td>€4,64</td></tr>
-                                <tr><td><strong>Accessori</strong></td><td>CLEAN AND CARE - 3 IN 1 (12 pz)</td><td>€17,24</td></tr>
-                                <tr><td><strong>Accessori</strong></td><td>CLEAN AND CARE - 3 IN 1 (SACHET)</td><td>€9,75</td></tr>
-                                <tr><td><strong>Accessori</strong></td><td>SUPER CLEAN WM</td><td>€10,02</td></tr>
-                                <tr><td><strong>Accessori</strong></td><td>DW AND WM SALT</td><td>€1,50</td></tr>
-                                <tr><td><strong>Accessori</strong></td><td>SUPER CARE</td><td>€9,37</td></tr>
-                                <tr><td><strong>Accessori</strong></td><td>Penna Smacchiante Ultrasonic</td><td>€124,00</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="alert alert-info">
-                        <div class="alert-title">PNC: 914 241 008 01</div>
-                        Utilizza il codice PNC per ordinare i ricambi. Sono disponibili anche categorie non elencate: Cestello, Cura e Manutenzione, Elementi porta, Elettronica, Guarnizioni, Manopole e Comandi, Vaschette detersivo, Piedini e Alloggiamento. Verifica la compatibilità sul sito Electrolux.
-                    </div>
-                </section>
-
-                <!-- DATI TECNICI -->
-                <section class="section" id="dati-tecnici">
-                    <div class="manual-img"><img src="images/rl40a_page_04.png" alt="Dati tecnici" loading="lazy">
-                        <div class="img-caption">Pagina 4 — Dati tecnici</div>
-                    </div>
-                    <h1 class="section-title">Dati Tecnici</h1>
-                    <div class="specs-grid">
-                        <div class="spec-label">Altezza</div>
-                        <div class="spec-value">85 cm</div>
-                        <div class="spec-label">Larghezza</div>
-                        <div class="spec-value">60 cm</div>
-                        <div class="spec-label">Profondità</div>
-                        <div class="spec-value">57 cm</div>
-                        <div class="spec-label">Tensione/Frequenza</div>
-                        <div class="spec-value">220-230V / 50 Hz</div>
-                        <div class="spec-label">Potenza massima assorbita</div>
-                        <div class="spec-value">2250 W</div>
-                        <div class="spec-label">Corrente minima fusibile</div>
-                        <div class="spec-value">10 A</div>
-                        <div class="spec-label">Pressione acqua min.</div>
-                        <div class="spec-value">50 kPa</div>
-                        <div class="spec-label">Pressione acqua max.</div>
-                        <div class="spec-value">800 kPa</div>
-                        <div class="spec-label">Carico massimo cotone</div>
-                        <div class="spec-value">5 kg</div>
-                        <div class="spec-label">Carico massimo sintetici/delicati</div>
-                        <div class="spec-value">2 kg</div>
-                        <div class="spec-label">Carico massimo lana</div>
-                        <div class="spec-value">1 kg</div>
-                        <div class="spec-label">Velocità centrifuga</div>
-                        <div class="spec-value">400 giri/min</div>
-                        <div class="spec-label">Consumo energetico (60°C cotone)</div>
-                        <div class="spec-value">0,95 kWh</div>
-                        <div class="spec-label">Consumo acqua (60°C cotone)</div>
-                        <div class="spec-value">68 litri</div>
-                        <div class="spec-label">Durata programma (60°C cotone)</div>
-                        <div class="spec-value">135 min.</div>
-                    </div>
-                    <p style="font-family:var(--mono);font-size:0.62rem;color:var(--ink-muted);margin-top:16px;">Questa macchina è conforme alle direttive CEE: 73/23/CEE (bassa tensione) e 89/336/CEE (compatibilità elettromagnetica).</p>
-                </section>
-
-                <!-- ESPERIENZA UTENTI -->
-                <section class="section" id="esperienza">
-                    <span class="section-badge">DALL'ESPERIENZA DEGLI UTENTI</span>
-                    <h1 class="section-title">Esperienze degli Utenti</h1>
-                    <p>Questa sezione raccoglie consigli pratici emersi da forum, recensioni e test indipendenti, integrando il manuale ufficiale con indicazioni su dosaggio detersivo, programmi consigliati, manutenzione ordinaria e anticalcare fai-da-te.</p>
-
-                    <h2 class="section-subtitle">Programmi Consigliati per Tipo di Capo</h2>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr><th>Tipo di capo</th><th>Programma</th><th>Temperatura</th><th>Centrifuga</th><th>Note</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><strong>Biancheria letto / asciugamani</strong></td><td>Cotone</td><td>60 °C</td><td>Max</td><td>Igienizzante; per sporco ostinato 90 °C</td></tr>
-                                <tr><td><strong>Bianchi (magliette, camicie)</strong></td><td>Cotone / Colorati</td><td>40 °C</td><td>Max</td><td>Detersivo con sbiancante ottico</td></tr>
-                                <tr><td><strong>Colorati misti</strong></td><td>Colorati / Sintetici</td><td>30–40 °C</td><td>800–1000 giri</td><td>Detersivo specifico per colorati</td></tr>
-                                <tr><td><strong>Sintetici (poliestere, nylon)</strong></td><td>Sintetici</td><td>30 °C</td><td>800 giri</td><td>Aggiungere ammorbidente; max 30 °C per evitare odori</td></tr>
-                                <tr><td><strong>Lana e cachemire</strong></td><td>Lana / Delicati</td><td>Freddo–30 °C</td><td>Esclusa o 400 giri</td><td>Detersivo specifico lana; NO ammorbidente</td></tr>
-                                <tr><td><strong>Seta e pizzo</strong></td><td>Delicati / Lavaggio a mano</td><td>Freddo–30 °C</td><td>Esclusa</td><td>Detersivo delicato; meglio in federa di cotone</td></tr>
-                                <tr><td><strong>Jeans</strong></td><td>Colorati / Cotone</td><td>40 °C</td><td>Max</td><td>Rovesciare i capi per proteggere il colore</td></tr>
-                                <tr><td><strong>Abbigliamento sportivo</strong></td><td>Sintetici / Rapido</td><td>30 °C</td><td>600–800 giri</td><td>NO ammorbidente (ostruisce le fibre tecniche)</td></tr>
-                                <tr><td><strong>Capi poco sporchi (rinfresco)</strong></td><td>Rapido (30 min)</td><td>30 °C</td><td>Max</td><td>Dose ridotta di detersivo; max 3 kg</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="alert alert-info">
-                        <div class="alert-title">Consiglio pratico</div>
-                        Controllare sempre l'etichetta del capo: un trattino sotto la vaschetta = sintetici, due trattini = lana/delicati. Per i capi nuovi a colori vivaci, fate un primo lavaggio da soli a 30 °C per verificare la solidità del colore.
-                    </div>
-
-                    <h2 class="section-subtitle">Dosaggio Detersivo: Guida Pratica</h2>
-                    <p>Il dosaggio corretto dipende da <strong>durezza dell'acqua</strong>, <strong>carico</strong> e <strong>grado di sporco</strong>. Informatevi sulla durezza della vostra zona presso il gestore idrico locale (mappa della durezza disponibile online).</p>
-
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr><th>Carico</th><th>Durezza acqua</th><th>Detersivo liquido</th><th>Detersivo in polvere</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td rowspan="3"><strong>4–5 kg (carico normale RL40A)</strong></td><td>Dolce (&lt; 15 °fH)</td><td>35 ml</td><td>50 g</td></tr>
-                                <tr><td>Media (15–25 °fH)</td><td>50 ml</td><td>75 g</td></tr>
-                                <tr><td>Dura (&gt; 25 °fH)</td><td>65 ml</td><td>100 g</td></tr>
-                                <tr><td rowspan="3"><strong>2–3 kg (mezzo carico)</strong></td><td>Dolce</td><td>25 ml</td><td>35 g</td></tr>
-                                <tr><td>Media</td><td>35 ml</td><td>50 g</td></tr>
-                                <tr><td>Dura</td><td>45 ml</td><td>70 g</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="alert alert-warning">
-                        <div class="alert-title">Dosi: regole d'oro</div>
-                        <ul style="margin:8px 0 0 16px;">
-                            <li><strong>Sporco ostinato:</strong> aumentare del 20% — <strong>Capi poco sporchi:</strong> ridurre del 20%</li>
-                            <li><strong>Polvere</strong> sempre nel cassetto (scomparto II) — si scioglie gradualmente</li>
-                            <li><strong>Liquido</strong> meglio nella pallina dosatrice direttamente nel cestello (evita residui nel cassetto)</li>
-                            <li><strong>Non fidatevi del tappo:</strong> ogni marca ha misure diverse — usate un misurino graduato</li>
-                            <li>Se la lavatrice fa troppa schiuma: dosate meno. Se i capi escono opachi o grigi: dosate di più.</li>
-                        </ul>
-                    </div>
-
-                    <h2 class="section-subtitle">Marche di Detersivo: Esperienze e Test</h2>
-                    <p>Secondo test indipendenti (<em>Altroconsumo</em>, recensioni utenti) e forum di settore, ecco le marche più apprezzate:</p>
-
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr><th>Marca</th><th>Formato consigliato</th><th>Ideale per</th><th>Voto medio</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><strong>Dixan</strong></td><td>Liquido Lavanda / Power Caps Color</td><td>Bianchi, macchie grasse, profumazione intensa</td><td>9.3/10</td></tr>
-                                <tr><td><strong>Dash</strong></td><td>Pods All-in-1 / Liquido Classico</td><td>Bucato quotidiano, anti-odore, rapporto q/prezzo</td><td>9.0/10</td></tr>
-                                <tr><td><strong>Ace</strong></td><td>Liquido Igienizzante Classico</td><td>Igienizzazione, bianchi, capi delicati</td><td>8.5/10</td></tr>
-                                <tr><td><strong>Omino Bianco</strong></td><td>Liquido Color+ / Igienizzante</td><td>Colorati, capi scuri/neri, rapporto q/prezzo</td><td>8.3/10</td></tr>
-                                <tr><td><strong>Chanteclair</strong></td><td>Liquido Muschio Bianco</td><td>Profumazione delicata, formula concentrata</td><td>8.2/10</td></tr>
-                                <tr><td><strong>Winni's / Biolù</strong></td><td>Liquido / Polvere ecologici</td><td>Basso impatto ambientale, pelli sensibili</td><td>8.0/10</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="alert alert-info">
-                        <div class="alert-title">Detersivo in polvere vs liquido</div>
-                        <strong>Polvere:</strong> più efficace su macchie ostinate e bianchi (contiene sbiancanti), meglio a T ≥ 40 °C. Rischio incrostazioni se dosato male. — <strong>Liquido:</strong> comodo, si scioglie subito, adatto a basse temperature e delicati. Serve più prodotto a parità di efficacia.
-                    </div>
-
-                    <h2 class="section-subtitle">Anticalcare e Manutenzione Ordinaria</h2>
-                    <p>Il calcare si forma con acqua dura, alte temperature e detersivo in polvere. La migliore soluzione naturale è l'<strong>acido citrico</strong>: economico (3–6 €/kg), biodegradabile, non danneggia gomma e metalli.</p>
-
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr><th>Prodotto</th><th>Dose</th><th>Frequenza</th><th>Modalità</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><strong>Acido citrico (polvere)</strong></td><td>100–150 g</td><td>Ogni 30–45 giorni</td><td>Versare nel cestello vuoto, ciclo a 60–90 °C; ideale per acqua dura</td></tr>
-                                <tr><td><strong>Acido citrico (soluzione 20%)</strong></td><td>100 ml</td><td>Ad ogni lavaggio</td><td>Nel vano ammorbidente, come anticalcare e ammorbidente naturale</td></tr>
-                                <tr><td><strong>Aceto bianco</strong></td><td>200 ml</td><td>Sporadico (max 1 volta/mese)</td><td>Nel cestello, ciclo a 60 °C; attenzione: può indurire le guarnizioni a lungo termine</td></tr>
-                                <tr><td><strong>Bicarbonato di sodio</strong></td><td>1 cucchiaio</td><td>Ad ogni lavaggio</td><td>Nel cestello come addolcente; non disincrosta, aiuta a prevenire</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="alert alert-warning">
-                        <div class="alert-title">Attenzione</div>
-                        <ul style="margin:8px 0 0 16px;">
-                            <li><strong>MAI</strong> miscelare acido citrico con candeggina (produce cloro gassoso tossico)</li>
-                            <li><strong>MAI</strong> miscelare acido citrico con bicarbonato (si neutralizzano a vicenda)</li>
-                            <li><strong>MAI</strong> versare acido citrico e detersivo insieme nel cassetto: acido e base si annullano</li>
-                            <li>L'acido citrico non disinfetta e non sgrassia: per igienizzare usare percarbonato di sodio</li>
-                            <li>L'aceto usato regolarmente può danneggiare guarnizioni in gomma e parti in alluminio</li>
-                        </ul>
-                    </div>
-
-                    <h2 class="section-subtitle">Pulizia Periodica della Lavatrice</h2>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr><th>Operazione</th><th>Frequenza</th><th>Come fare</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><strong>Guarnizione oblò</strong></td><td>Dopo ogni lavaggio</td><td>Asciugare con un panno; una volta al mese pulire le pieghe con aceto e bicarbonato</td></tr>
-                                <tr><td><strong>Cassetto detersivo</strong></td><td>Ogni 15–30 giorni</td><td>Estrarre, lavare sotto acqua calda, spazzolare i residui nei vani</td></tr>
-                                <tr><td><strong>Filtro pompa di scarico</strong></td><td>Ogni 2–3 mesi</td><td>Aprire lo sportellino, svuotare l'acqua nella bacinella, estrarre e pulire il filtro</td></tr>
-                                <tr><td><strong>Lavaggio sanitario a 90 °C</strong></td><td>Ogni 1–2 mesi</td><td>Cesto vuoto, 100 g acido citrico, ciclo cotone a 90 °C</td></tr>
-                                <tr><td><strong>Tenere l'oblò aperto</strong></td><td>Sempre</td><td>Dopo ogni lavaggio lasciare l'oblò socchiuso per evitare muffe e cattivi odori</td></tr>
-                                <tr><td><strong>Pulizia esterna</strong></td><td>Quando necessario</td><td>Panno umido e detersivo neutro; NO solventi o abrasivi</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h2 class="section-subtitle">Errori Comuni da Evitare</h2>
-                    <div class="alert alert-danger">
-                        <div class="alert-title">Gli errori più frequenti segnalati dagli utenti</div>
-                        <ul style="margin:8px 0 0 16px;">
-                            <li><strong>Usare sempre la stessa dose di detersivo</strong> — spreco di prodotto e residui sui capi</li>
-                            <li><strong>Riempire il cestello oltre il limite</strong> — i panni non si lavano né sciacquano correttamente</li>
-                            <li><strong>Mettere il liquido nel cassetto per abitudine</strong> — meglio la pallina dosatrice nel cestello</li>
-                            <li><strong>Ignorare la durezza dell'acqua</strong> — dosaggio sbagliato, bucato opaco o macchiato</li>
-                            <li><strong>Non pulire il filtro regolarmente</strong> — causa odori, acqua stagnante e potenziali guasti alla pompa</li>
-                            <li><strong>Chiudere l'oblò subito dopo il lavaggio</strong> — favorisce muffa e cattivi odori; lasciare sempre socchiuso</li>
-                            <li><strong>Usare anticalcare chimico ad ogni lavaggio</strong> — non necessario se l'acqua non è molto dura</li>
-                        </ul>
-                    </div>
-
-                </section>
-
-            </div><!-- /content -->
-
-            <div class="manual-img" style="max-width:600px;margin:0 auto 24px;">
-                <img src="images/rl40a_page_20.png" alt="Electrolux Group" loading="lazy" style="width:100%;height:auto;display:block">
-                <div class="img-caption">Pagina 20 — Electrolux Group</div>
-            </div>
-
-            <footer id="footer">
-                <p style="font-family:var(--serif);font-style:italic;font-size:1rem;margin-bottom:8px;">Rex RL40A</p>
-                <p>&copy; Rex — Electrolux Group. Tutti i diritti riservati.</p>
-                <p style="margin-top:8px;font-family:var(--mono);font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;">
-                    Istruzioni per l'installazione e l'uso &middot; Consultazione web</p>
-            </footer>
-        </main>
-
-        <script>
-            function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active') }
-            const sections = document.querySelectorAll('.section[id]'); const navItems = document.querySelectorAll('.nav-item[href^="#"]');
-            function updateActiveNav() { const scrollY = window.scrollY + 90; let current = ''; sections.forEach(s => { if (s.offsetTop <= scrollY) current = s.id }); navItems.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current) }) }
-            window.addEventListener('scroll', updateActiveNav, { passive: true }); updateActiveNav();
-            const searchData = [
-                { s: "Sicurezza", t: "Avvertenze installazione e uso", href: "#avvertenze" }, { s: "Sicurezza", t: "Sicurezza bambini", href: "#sicurezza-bambini" }, { s: "Sicurezza", t: "Smaltimento e protezione ambiente", href: "#smaltimento" }, { s: "Installazione", t: "Rimozione dispositivi trasporto", href: "#rimozione-trasporto" }, { s: "Installazione", t: "Posizionamento e livellamento", href: "#posizionamento" }, { s: "Installazione", t: "Alimentazione acqua pressione", href: "#acqua" }, { s: "Installazione", t: "Scarico collegamento", href: "#scarico" }, { s: "Installazione", t: "Collegamento elettrico 220-230V", href: "#elettrico" }, { s: "Descrizione", t: "Componenti principali", href: "#componenti" }, { s: "Descrizione", t: "Cassetto detersivo", href: "#cassetto" }, { s: "Uso", t: "Pannello comandi descrizione", href: "#comandi" }, { s: "Uso", t: "Sequenza operazioni lavaggio", href: "#sequenza" }, { s: "Uso", t: "Fine programma", href: "#fine" }, { s: "Consigli", t: "Cernita biancheria temperature", href: "#cernita" }, { s: "Consigli", t: "Carichi massimi biancheria", href: "#carichi" }, { s: "Consigli", t: "Eliminazione macchie", href: "#macchie" }, { s: "Consigli", t: "Detersivi e durezza acqua", href: "#detersivi" }, { s: "Programmi", t: "Tabella cotone e lino", href: "#cotone" }, { s: "Programmi", t: "Tabella delicati sintetici lana", href: "#delicati" }, { s: "Programmi", t: "Simboli trattamento tessuti", href: "#simboli" }, { s: "Manutenzione", t: "Guarnizione oblò", href: "#guarnizione" }, { s: "Manutenzione", t: "Pulizia cassetto detersivo", href: "#cassetto-pulizia" }, { s: "Manutenzione", t: "Filtrino tubo alimentazione", href: "#filtrino" }, { s: "Manutenzione", t: "Pulizia pompa scarico", href: "#scarico-pulizia" }, { s: "Manutenzione", t: "Scarico emergenza acqua", href: "#emergenza" }, { s: "Manutenzione", t: "Precauzioni antigelo", href: "#gelo" }, { s: "Diagnostica", t: "Anomalie funzionamento cause", href: "#anomalie" }, { s: "Assistenza", t: "Ricambi e centro assistenza", href: "#assistenza" }, { s: "Ricambi", t: "Ricambi originali PNC 91424100801 prezzi tubi filtri accessori", href: "#ricambi" }, { s: "Dati Tecnici", t: "Specifiche dimensioni consumo", href: "#dati-tecnici" },{ s: "Utenti", t: "Programmi consigliati per tipo di capo", href: "#esperienza" },{ s: "Utenti", t: "Dosaggio detersivo guida pratica", href: "#esperienza" },{ s: "Utenti", t: "Marche detersivo test e recensioni", href: "#esperienza" },{ s: "Utenti", t: "Anticalcare manutenzione ordinaria", href: "#esperienza" },{ s: "Utenti", t: "Pulizia periodica lavatrice", href: "#esperienza" },{ s: "Utenti", t: "Errori comuni da evitare", href: "#esperienza" },
-            ];
-            const si = document.getElementById('search'); const sr = document.getElementById('search-results');
-            si.addEventListener('input', function () { const q = this.value.toLowerCase().trim(); if (q.length < 2) { sr.classList.remove('active'); return } const m = searchData.filter(d => d.t.toLowerCase().includes(q) || d.s.toLowerCase().includes(q)); sr.innerHTML = m.length === 0 ? '<div class="no-results">Nessun risultato</div>' : m.slice(0, 8).map(r => `<div class="result-item" onclick="location.href='${r.href}'"><div class="result-section">${r.s}</div>${r.t.substring(0, 70)}&hellip;</div>`).join(''); sr.classList.add('active') });
-            si.addEventListener('blur', () => setTimeout(() => sr.classList.remove('active'), 200));
-            si.addEventListener('focus', () => { if (si.value.trim().length >= 2) sr.classList.add('active') });
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') { sr.classList.remove('active'); si.blur(); document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active') } if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); si.focus() } });
-        </script>
 </body>
-
 </html>
