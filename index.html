@@ -36,8 +36,15 @@
   --font-display:'DM Serif Display',Georgia,serif;
   --font-sans:'DM Sans',system-ui,sans-serif;
   --font-mono:'DM Mono',monospace;
-  --nav-w:280px;
+  --nav-w:260px;
+  --aside-w:240px;
   --header-h:70px;
+  --sage:#7a8b6f;
+  --sage-light:#9aad8f;
+  --sky:#5b7fa5;
+  --sky-light:#7ea3c4;
+  --rust:#b7472a;
+  --rust-light:#d4684a;
 }
 html{scroll-behavior:smooth;font-size:18px}
 body{
@@ -117,12 +124,71 @@ header{
 
 /* ===== MAIN ===== */
 .main-wrap{
-  margin-top:var(--header-h);margin-left:var(--nav-w);
+  margin-top:var(--header-h);margin-left:var(--nav-w);margin-right:var(--aside-w);
   min-height:calc(100vh - var(--header-h));
+  display:flex;
 }
 .content{
-  max-width:880px;margin:0 auto;padding:48px 48px 80px;
+  flex:1;max-width:880px;margin:0 auto;padding:48px 48px 80px;
+  min-width:0;
 }
+
+/* ===== RIGHT SIDEBAR ===== */
+.right-sidebar{
+  width:var(--aside-w);flex-shrink:0;
+  position:fixed;top:var(--header-h);right:0;bottom:0;
+  overflow-y:auto;z-index:85;
+  background:var(--paper-warm);
+  border-left:1px solid var(--border);
+  padding:20px 16px;
+}
+.right-sidebar::-webkit-scrollbar{width:4px}
+.right-sidebar::-webkit-scrollbar-track{background:transparent}
+.right-sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.rs-block{margin-bottom:28px}
+.rs-block-title{
+  font-family:var(--font-mono);font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.14em;
+  color:var(--bordeaux);font-weight:600;
+  margin-bottom:12px;padding-bottom:8px;
+  border-bottom:2px solid var(--bordeaux);
+}
+.rs-block p{font-size:.78rem;color:var(--ink-faded);line-height:1.55;margin-bottom:8px}
+
+/* Quick specs */
+.rs-spec{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.75rem}
+.rs-spec:last-child{border-bottom:none}
+.rs-spec .label{color:var(--ink-light)}
+.rs-spec .value{font-family:var(--font-mono);font-weight:500;color:var(--ink)}
+
+/* Review card */
+.review-card{background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;margin-bottom:10px}
+.review-card .stars{color:var(--gold);font-size:.75rem;letter-spacing:2px;margin-bottom:4px}
+.review-card .review-text{font-size:.75rem;color:var(--ink-faded);line-height:1.5;font-style:italic}
+.review-card .reviewer{font-family:var(--font-mono);font-size:.65rem;color:var(--ink-light);margin-top:6px;text-align:right}
+
+/* Maintenance checklist */
+.maint-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:.75rem;border-bottom:1px solid var(--border)}
+.maint-item:last-child{border-bottom:none}
+.maint-item input[type=checkbox]{accent-color:var(--bordeaux);margin-top:2px;flex-shrink:0;cursor:pointer}
+.maint-item label{color:var(--ink-faded);cursor:pointer;line-height:1.4}
+.maint-item.done label{text-decoration:line-through;color:var(--ink-light)}
+.maint-freq{font-family:var(--font-mono);font-size:.6rem;color:var(--sage);background:#eef2ec;padding:1px 5px;border-radius:3px;margin-left:auto;white-space:nowrap;flex-shrink:0}
+
+/* Program guide */
+.prog-guide-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.75rem}
+.prog-guide-item:last-child{border-bottom:none}
+.prog-guide-item .prog-icon{font-size:1rem;flex-shrink:0;width:24px;text-align:center}
+.prog-guide-item .prog-info{flex:1;min-width:0}
+.prog-guide-item .prog-name{font-weight:600;color:var(--ink);font-size:.78rem}
+.prog-guide-item .prog-detail{font-family:var(--font-mono);font-size:.65rem;color:var(--bordeaux-light)}
+.prog-guide-item .prog-temp{font-family:var(--font-mono);font-size:.7rem;color:var(--gold-faded);white-space:nowrap}
+
+/* Tip card */
+.tip-card{background:linear-gradient(135deg,rgba(123,45,59,.04),rgba(184,134,11,.04));border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;margin-bottom:10px;position:relative;overflow:hidden}
+.tip-card::before{content:'💡';position:absolute;top:8px;right:10px;font-size:1.2rem;opacity:.3}
+.tip-card .tip-text{font-size:.75rem;color:var(--ink-faded);line-height:1.5;padding-right:24px}
 
 /* ===== HERO ===== */
 #hero{
@@ -235,6 +301,11 @@ tr:nth-child(even) td{background:#fbf8f2}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:80;backdrop-filter:blur(2px)}
 
 /* ===== RESPONSIVE ===== */
+@media(max-width:1200px){
+  :root{--aside-w:0px}
+  .right-sidebar{display:none}
+  .main-wrap{margin-right:0}
+}
 @media(max-width:1024px){
   :root{--nav-w:240px;font-size:16px}
   .content{padding:32px 28px 60px}
@@ -244,9 +315,7 @@ tr:nth-child(even) td{background:#fbf8f2}
 @media(max-width:768px){
   :root{font-size:15px;--header-h:60px}
   .menu-btn{display:flex}
-  .sidebar{
-    transform:translateX(-100%);
-  }
+  .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
   .overlay{display:block;opacity:0;pointer-events:none;transition:opacity .35s}
   .overlay.show{opacity:1;pointer-events:auto}
@@ -319,7 +388,7 @@ tr:nth-child(even) td{background:#fbf8f2}
     <a href="#durezza"><span class="num">10</span>Durezza Acqua</a>
     <a href="#pulizia"><span class="num">11</span>Pulizia</a>
     <a href="#manutenzione"><span class="num">12</span>Manutenzione</a>
-    <a href="#ricambi"><span class="num">13</span>Ricambi Originali</a>
+    <a href="#ricambi"><span class="num">13</span>Ricambi & Shop</a>
     <a href="#dati-tecnici"><span class="num">14</span>Dati Tecnici</a>
     <a href="#esperienza"><span class="num">15</span>Dall'Esperienza</a>
   </nav>
@@ -667,6 +736,190 @@ tr:nth-child(even) td{background:#fbf8f2}
     </section>
 
   </div><!-- /content -->
+
+  <!-- ===== RIGHT SIDEBAR ===== -->
+  <aside class="right-sidebar">
+
+    <!-- Quick Specs -->
+    <div class="rs-block">
+      <div class="rs-block-title">Scheda Rapida</div>
+      <div class="rs-spec"><span class="label">Modello</span><span class="value">RL40A</span></div>
+      <div class="rs-spec"><span class="label">PNC</span><span class="value">91478021300</span></div>
+      <div class="rs-spec"><span class="label">Capacità</span><span class="value">7 kg</span></div>
+      <div class="rs-spec"><span class="label">Giri max</span><span class="value">1200 rpm</span></div>
+      <div class="rs-spec"><span class="label">Classe</span><span class="value">A+++</span></div>
+      <div class="rs-spec"><span class="label">Potenza</span><span class="value">2200 W</span></div>
+      <div class="rs-spec"><span class="label">Misure</span><span class="value">595×850×540</span></div>
+    </div>
+
+    <!-- User Reviews -->
+    <div class="rs-block">
+      <div class="rs-block-title">Recensioni Utenti</div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">"Silenziosa anche a 1200 giri. Ottimo rapporto qualità-prezzo. Uso da 2 anni senza problemi."</div>
+        <div class="reviewer">— Marco R.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <div class="review-text">"Programma rapido 30' comodissimo per il quotidiano. Unico neo: la vaschetta detersivo è un po' stretta."</div>
+        <div class="reviewer">— Giulia F.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">"Lavaggio impeccabile anche a 40°C. Consumo davvero basso rispetto alla vecchia lavatrice."</div>
+        <div class="reviewer">— Andrea P.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <div class="review-text">"Ottima per famiglie di 3-4 persone. Il programma lana è delicato ma efficace."</div>
+        <div class="reviewer">— Sara M.</div>
+      </div>
+    </div>
+
+    <!-- Maintenance Checklist -->
+    <div class="rs-block">
+      <div class="rs-block-title">Manutenzione</div>
+      <div class="maint-item">
+        <input type="checkbox" id="m1">
+        <label for="m1">Pulizia gomma oblò</label>
+        <span class="maint-freq">settimanale</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m2">
+        <label for="m2">Pulizia filtro pompa</label>
+        <span class="maint-freq">1-2 mesi</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m3">
+        <label for="m3">Pulizia vaschetta detersivo</label>
+        <span class="maint-freq">2 mesi</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m4">
+        <label for="m4">Ciclo autopulizia 90°C</label>
+        <span class="maint-freq">1 mese</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m5">
+        <label for="m5">Trattamento anticalcare</label>
+        <span class="maint-freq">3 mesi</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m6">
+        <label for="m6">Controllo tubo carico</label>
+        <span class="maint-freq">annuale</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m7">
+        <label for="m7">Sostituzione tubo carico</label>
+        <span class="maint-freq">5 anni</span>
+      </div>
+    </div>
+
+    <!-- Program Guide by Clothing -->
+    <div class="rs-block">
+      <div class="rs-block-title">Guida Pratica</div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🛏️</span>
+        <div class="prog-info">
+          <div class="prog-name">Lenzuola & federe</div>
+          <div class="prog-detail">Cotone · 60°C</div>
+        </div>
+        <span class="prog-temp">1200 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧖</span>
+        <div class="prog-info">
+          <div class="prog-name">Asciugamani</div>
+          <div class="prog-detail">Cotone · 60°C</div>
+        </div>
+        <span class="prog-temp">1200 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">👔</span>
+        <div class="prog-info">
+          <div class="prog-name">Camicie & magliette</div>
+          <div class="prog-detail">Sintetici · 40°C</div>
+        </div>
+        <span class="prog-temp">900 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">👖</span>
+        <div class="prog-info">
+          <div class="prog-name">Jeans & pantaloni</div>
+          <div class="prog-detail">Sintetici · 40°C</div>
+        </div>
+        <span class="prog-temp">900 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧦</span>
+        <div class="prog-info">
+          <div class="prog-name">Calze & intimo</div>
+          <div class="prog-detail">Sintetici · 40°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧣</span>
+        <div class="prog-info">
+          <div class="prog-name">Lana & cashmere</div>
+          <div class="prog-detail">Lana · 30°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">👗</span>
+        <div class="prog-info">
+          <div class="prog-name">Seta & delicati</div>
+          <div class="prog-detail">Delicati · 30°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🏃</span>
+        <div class="prog-info">
+          <div class="prog-name">Sport & tecnici</div>
+          <div class="prog-detail">Sintetici · 30°C</div>
+        </div>
+        <span class="prog-temp">800 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧸</span>
+        <div class="prog-info">
+          <div class="prog-name">Peluche & bambini</div>
+          <div class="prog-detail">Delicati · 30°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">⏱️</span>
+        <div class="prog-info">
+          <div class="prog-name">Poco sporco / urgente</div>
+          <div class="prog-detail">Rapido 30' · 30°C</div>
+        </div>
+        <span class="prog-temp">800 rpm</span>
+      </div>
+    </div>
+
+    <!-- Pro Tips -->
+    <div class="rs-block">
+      <div class="rs-block-title">Consigli Pro</div>
+      <div class="tip-card">
+        <div class="tip-text">Non riempire il cesto fino al bordo. Lascia sempre un palmo di spazio per far girare i capi.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-text">Versa il detersivo nella vaschetta, mai direttamente nel cesto. Evita macchie e sprechi.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-text">Lava gli asciugamani separatamente dal resto. Assorbono molto più detersivo del necessario.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-text">Lascia lo sportello aperto dopo ogni lavaggio per asciugare la gomma e prevenire muffe.</div>
+      </div>
+    </div>
+
+  </aside>
 </div><!-- /main-wrap -->
 
 <script>
@@ -710,6 +963,13 @@ const obs=new IntersectionObserver(entries=>{
   });
 },{rootMargin:'-30% 0px -40% 0px'});
 sections.forEach(s=>obs.observe(s));
+
+// maintenance checkboxes
+document.querySelectorAll('.maint-item input[type=checkbox]').forEach(cb=>{
+  cb.addEventListener('change',()=>{
+    cb.closest('.maint-item').classList.toggle('done',cb.checked);
+  });
+});
 </script>
 
 </body>
