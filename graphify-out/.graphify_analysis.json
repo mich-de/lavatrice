@@ -1,0 +1,204 @@
+{
+  "communities": {
+    "0": [
+      "category_altri_prodotti",
+      "category_cestello",
+      "category_cura_manutenzione",
+      "category_elementi_porta",
+      "category_elettronica",
+      "category_filtri",
+      "category_guarnizioni",
+      "category_manopole_comandi",
+      "category_motori_pompe",
+      "category_piedini_alloggiamento",
+      "category_vaschette_detersivo",
+      "doc_electrolux_shop_rl40",
+      "model_rl40",
+      "pnc_91424100801",
+      "prod_bullone_ammortizzatore",
+      "prod_copri_filtro_pompa",
+      "prod_penna_smacchiante_ultrasonic",
+      "prod_sigillo_filtro"
+    ],
+    "1": [
+      "rl40a_adjustable_feet",
+      "rl40a_child_safety",
+      "rl40a_delicates",
+      "rl40a_drain_connection",
+      "rl40a_drawer_cleaning",
+      "rl40a_electrical_connection",
+      "rl40a_electrical_safety",
+      "rl40a_index_html",
+      "rl40a_leveling",
+      "rl40a_manual_txt",
+      "rl40a_program_g",
+      "rl40a_rex_brand",
+      "rl40a_rex_rl40a",
+      "rl40a_technical_specs",
+      "rl40a_woolmark"
+    ],
+    "2": [
+      "category_tubi_flessibili",
+      "prod_tubo_carico_acqua_calda_1_5m",
+      "prod_tubo_carico_acqua_calda_2_5m",
+      "prod_tubo_carico_acqua_fredda_2_5m",
+      "prod_tubo_carico_classic_1_5m",
+      "prod_tubo_carico_classic_3_5m",
+      "prod_tubo_carico_safety_1_5m",
+      "prod_tubo_carico_safety_2_5m",
+      "prod_tubo_scarico_1_5m",
+      "prod_tubo_scarico_2_5m"
+    ],
+    "3": [
+      "rl40a_bleach_compartment",
+      "rl40a_detergent_drawer",
+      "rl40a_drain_area_cleaning",
+      "rl40a_drain_pump",
+      "rl40a_eco_avant",
+      "rl40a_emergency_drain",
+      "rl40a_fabric_softener_compartment",
+      "rl40a_main_wash_compartment",
+      "rl40a_prewash_compartment"
+    ],
+    "4": [
+      "category_accessori",
+      "prod_clean_care_3in1",
+      "prod_clean_care_3in1_12pc",
+      "prod_clean_care_3in1_sachet",
+      "prod_dw_wm_salt",
+      "prod_super_care",
+      "prod_super_clean_wm"
+    ],
+    "5": [
+      "rl40a_cotton_linen",
+      "rl40a_half_load",
+      "rl40a_program_b",
+      "rl40a_program_daily",
+      "rl40a_program_eco",
+      "rl40a_spin_exclusion"
+    ],
+    "6": [
+      "rl40a_door_lock",
+      "rl40a_filter_cleaning",
+      "rl40a_filter_screen",
+      "rl40a_troubleshooting",
+      "rl40a_water_connection"
+    ],
+    "7": [
+      "rl40a_door_seal",
+      "rl40a_door_seal_maintenance",
+      "rl40a_drum",
+      "rl40a_heating_element",
+      "rl40a_motor"
+    ],
+    "8": [
+      "rl40a_control_panel",
+      "rl40a_program_selector",
+      "rl40a_start_stop_button",
+      "rl40a_temperature_selector"
+    ],
+    "9": [
+      "rl40a_anti_crease",
+      "rl40a_program_j",
+      "rl40a_synthetics"
+    ],
+    "10": [
+      "rl40a_drain_hose",
+      "rl40a_freeze_precautions",
+      "rl40a_water_inlet_hose"
+    ],
+    "11": [
+      "rl40a_program_l",
+      "rl40a_wool"
+    ],
+    "12": [
+      "rl40a_sorting",
+      "rl40a_stain_removal"
+    ],
+    "13": [
+      "rl40a_detergent_dosing",
+      "rl40a_water_hardness"
+    ]
+  },
+  "cohesion": {
+    "0": 0.11764705882352941,
+    "1": 0.13333333333333333,
+    "2": 0.2,
+    "3": 0.2222222222222222,
+    "4": 0.2857142857142857,
+    "5": 0.4,
+    "6": 0.4,
+    "7": 0.4,
+    "8": 0.5,
+    "9": 0.6666666666666666,
+    "10": 0.6666666666666666,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0
+  },
+  "gods": [
+    {
+      "id": "rl40a_rex_rl40a",
+      "label": "Rex RL40A Washing Machine",
+      "degree": 47
+    },
+    {
+      "id": "model_rl40",
+      "label": "Electrolux RL40 Lavatrice 5 kg",
+      "degree": 15
+    },
+    {
+      "id": "category_tubi_flessibili",
+      "label": "Tubi flessibili",
+      "degree": 10
+    },
+    {
+      "id": "category_accessori",
+      "label": "Accessori",
+      "degree": 7
+    },
+    {
+      "id": "rl40a_detergent_drawer",
+      "label": "Detergent Drawer (Cassetto detersivo)",
+      "degree": 5
+    },
+    {
+      "id": "rl40a_drain_pump",
+      "label": "Drain Pump (Pompa scarico)",
+      "degree": 5
+    },
+    {
+      "id": "rl40a_program_b",
+      "label": "Program B (Standard Whites/Colors)",
+      "degree": 5
+    },
+    {
+      "id": "rl40a_drum",
+      "label": "Drum/Cesto",
+      "degree": 4
+    },
+    {
+      "id": "rl40a_control_panel",
+      "label": "Control Panel (Pannello comandi)",
+      "degree": 4
+    },
+    {
+      "id": "rl40a_filter_screen",
+      "label": "Inlet Filter Screen (Filtrino)",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Rex RL40A Manual PDF Extract",
+      "target": "Rex RL40A Washing Machine",
+      "source_files": [
+        "graphify-out/rl40a_manual.txt",
+        "index.html"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; peripheral node `Rex RL40A Manual PDF Extract` unexpectedly reaches hub `Rex RL40A Washing Machine`"
+    }
+  ]
+}
