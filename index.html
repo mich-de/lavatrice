@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rex RL40A — Manuale d'Uso e Manutenzione</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1a1a;
+  --ink-faded:#444;
+  --ink-light:#666;
+  --paper:#fbf7f0;
+  --paper-warm:#f5efe6;
+  --paper-dark:#e8dfd0;
+  --paper-card:#fffcf7;
+  --parchment:#fefcf7;
+  --bordeaux:#7b2d3b;
+  --bordeaux-dark:#5c1f2a;
+  --bordeaux-light:#9e4a58;
+  --gold:#b8860b;
+  --gold-light:#d4a843;
+  --gold-faded:#c4956a;
+  --border:#d4c9b8;
+  --alert-bg:#fdf6ec;
+  --alert-border:#e6c9a8;
+  --radius-sm:4px;
+  --radius-md:8px;
+  --radius-lg:16px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.1);
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-sans:'DM Sans',system-ui,sans-serif;
+  --font-mono:'DM Mono',monospace;
+  --nav-w:260px;
+  --header-h:70px;
+  --sage:#7a8b6f;
+  --sage-light:#9aad8f;
+  --sky:#5b7fa5;
+  --sky-light:#7ea3c4;
+  --rust:#b7472a;
+  --rust-light:#d4684a;
+}
+html{scroll-behavior:smooth;font-size:18px}
+body{
+  font-family:var(--font-sans);
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--bordeaux);color:#fff}
+a{color:var(--bordeaux);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold)}
+.btn-link{display:inline-block;padding:4px 12px;border:1px solid var(--bordeaux);border-radius:4px;font-size:.75rem;font-weight:600;color:var(--bordeaux);background:transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-link:hover{background:var(--bordeaux);color:#fff}
+img{max-width:100%;height:auto;display:block}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--header-h);
+  background:var(--parchment);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.header-inner{
+  display:flex;align-items:center;gap:16px;width:100%;
+  max-width:1440px;margin:0 auto;
+}
+.logo-mark{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-display);font-size:1.1rem;
+  color:var(--bordeaux);white-space:nowrap;
+}
+.logo-mark svg{flex-shrink:0}
+.menu-btn{
+  display:none;background:none;border:none;cursor:pointer;
+  padding:8px;margin-left:auto;color:var(--bordeaux);
+}
+.menu-btn svg{display:block}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:fixed;top:var(--header-h);left:0;bottom:0;
+  width:var(--nav-w);background:var(--paper-warm);
+  border-right:1px solid var(--border);
+  overflow-y:auto;z-index:90;padding:24px 0;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.sidebar nav{display:flex;flex-direction:column;gap:2px}
+.sidebar .nav-label{
+  padding:4px 24px 8px;
+  font-family:var(--font-mono);font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--ink-light);font-weight:500;
+}
+.sidebar a{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 24px;font-size:.85rem;font-weight:500;
+  color:var(--ink-faded);border-left:3px solid transparent;
+  transition:all .2s;line-height:1.3;
+}
+.sidebar a:hover,.sidebar a.active{
+  color:var(--bordeaux);background:rgba(123,45,59,.06);
+  border-left-color:var(--bordeaux);
+}
+.sidebar a .num{
+  font-family:var(--font-mono);font-size:.7rem;
+  color:var(--gold-faded);min-width:24px;font-weight:400;
+}
+
+/* ===== MAIN ===== */
+.main-wrap{
+  margin-top:var(--header-h);margin-left:var(--nav-w);
+  min-height:calc(100vh - var(--header-h));
+}
+.content{
+  max-width:880px;margin:0 auto;padding:48px 48px 80px;
+}
+
+/* ===== RIGHT SIDEBAR ===== */
+.right-sidebar{
+  width:240px;flex-shrink:0;
+  position:fixed;top:var(--header-h);right:0;bottom:0;
+  overflow-y:auto;z-index:85;
+  background:var(--paper-warm);
+  border-left:1px solid var(--border);
+  padding:20px 16px;
+}
+.right-sidebar::-webkit-scrollbar{width:4px}
+.right-sidebar::-webkit-scrollbar-track{background:transparent}
+.right-sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.rs-block{margin-bottom:28px}
+.rs-block-title{
+  font-family:var(--font-mono);font-size:.65rem;
+  text-transform:uppercase;letter-spacing:.14em;
+  color:var(--bordeaux);font-weight:600;
+  margin-bottom:12px;padding-bottom:8px;
+  border-bottom:2px solid var(--bordeaux);
+}
+.rs-block p{font-size:.78rem;color:var(--ink-faded);line-height:1.55;margin-bottom:8px}
+
+/* Quick specs */
+.rs-spec{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.75rem}
+.rs-spec:last-child{border-bottom:none}
+.rs-spec .label{color:var(--ink-light)}
+.rs-spec .value{font-family:var(--font-mono);font-weight:500;color:var(--ink)}
+
+/* Review card */
+.review-card{background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;margin-bottom:10px}
+.review-card .stars{color:var(--gold);font-size:.75rem;letter-spacing:2px;margin-bottom:4px}
+.review-card .review-text{font-size:.75rem;color:var(--ink-faded);line-height:1.5;font-style:italic}
+.review-card .reviewer{font-family:var(--font-mono);font-size:.65rem;color:var(--ink-light);margin-top:6px;text-align:right}
+
+/* Maintenance checklist */
+.maint-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:.75rem;border-bottom:1px solid var(--border)}
+.maint-item:last-child{border-bottom:none}
+.maint-item input[type=checkbox]{accent-color:var(--bordeaux);margin-top:2px;flex-shrink:0;cursor:pointer}
+.maint-item label{color:var(--ink-faded);cursor:pointer;line-height:1.4}
+.maint-item.done label{text-decoration:line-through;color:var(--ink-light)}
+.maint-freq{font-family:var(--font-mono);font-size:.6rem;color:var(--sage);background:#eef2ec;padding:1px 5px;border-radius:3px;margin-left:auto;white-space:nowrap;flex-shrink:0}
+
+/* Program guide */
+.prog-guide-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.75rem}
+.prog-guide-item:last-child{border-bottom:none}
+.prog-guide-item .prog-icon{font-size:1rem;flex-shrink:0;width:24px;text-align:center}
+.prog-guide-item .prog-info{flex:1;min-width:0}
+.prog-guide-item .prog-name{font-weight:600;color:var(--ink);font-size:.78rem}
+.prog-guide-item .prog-detail{font-family:var(--font-mono);font-size:.65rem;color:var(--bordeaux-light)}
+.prog-guide-item .prog-temp{font-family:var(--font-mono);font-size:.7rem;color:var(--gold-faded);white-space:nowrap}
+
+/* Tip card */
+.tip-card{background:linear-gradient(135deg,rgba(123,45,59,.04),rgba(184,134,11,.04));border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;margin-bottom:10px;position:relative;overflow:hidden}
+.tip-card::before{content:'💡';position:absolute;top:8px;right:10px;font-size:1.2rem;opacity:.3}
+.tip-card .tip-text{font-size:.75rem;color:var(--ink-faded);line-height:1.5;padding-right:24px}
+
+/* ===== HERO ===== */
+#hero{
+  padding:80px 48px 64px;background:var(--paper-warm);
+  border-bottom:1px solid var(--border);position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 80% 40%, rgba(123,45,59,.04) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 40% at 20% 60%, rgba(184,134,11,.04) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{max-width:880px;margin:0 auto;position:relative;z-index:1}
+.hero-sup{
+  font-family:var(--font-mono);font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.18em;
+  color:var(--gold-faded);margin-bottom:12px;
+}
+#hero h1{
+  font-family:var(--font-display);font-size:3rem;
+  font-weight:400;line-height:1.15;color:var(--bordeaux-dark);
+  max-width:700px;
+}
+#hero h1 em{font-style:italic}
+.hero-desc{
+  font-size:1.05rem;color:var(--ink-faded);
+  margin-top:16px;max-width:600px;line-height:1.7;
+}
+.hero-meta{
+  display:flex;gap:32px;margin-top:28px;font-size:.85rem;
+  color:var(--ink-light);
+}
+.hero-meta span{display:flex;align-items:center;gap:6px}
+.hero-meta .tag{
+  display:inline-block;padding:2px 10px;border-radius:3px;
+  background:var(--paper-dark);font-family:var(--font-mono);
+  font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;
+}
+
+/* ===== SECTIONS ===== */
+section{padding:0 0 48px;position:relative}
+section:not(:last-of-type)::after{
+  content:'';display:block;width:60px;height:2px;
+  background:var(--border);margin:0 auto;margin-top:48px;
+}
+.section-header{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:24px;padding-top:24px;
+}
+.section-num{
+  font-family:var(--font-mono);font-size:.75rem;
+  color:var(--gold-faded);font-weight:500;white-space:nowrap;
+}
+h2{
+  font-family:var(--font-display);font-size:1.75rem;
+  font-weight:400;color:var(--bordeaux-dark);line-height:1.25;
+}
+h3{
+  font-family:var(--font-display);font-size:1.25rem;
+  font-weight:400;color:var(--ink);margin:24px 0 12px;
+}
+p{margin-bottom:16px;color:var(--ink-faded)}
+
+/* ===== ALERTS ===== */
+.alert{
+  padding:16px 20px;border-radius:var(--radius-md);
+  background:var(--alert-bg);border-left:4px solid var(--alert-border);
+  margin:20px 0;font-size:.9rem;
+}
+.alert strong{color:var(--bordeaux-dark)}
+.alert.warn{border-left-color:var(--gold);background:#fef9ef}
+.alert.info{border-left-color:var(--bordeaux-light)}
+
+/* ===== TABLES ===== */
+.table-wrap{overflow-x:auto;margin:20px 0;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.85rem;background:var(--paper-card)}
+thead{background:var(--paper-dark)}
+th{padding:12px 16px;text-align:left;font-weight:600;color:var(--ink);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+td{padding:10px 16px;border-top:1px solid var(--border);color:var(--ink-faded)}
+tr:nth-child(even) td{background:#fbf8f2}
+
+/* ===== SYMBOLS GRID ===== */
+.symbol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;margin:20px 0}
+.symbol-card{background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:center}
+.symbol-card .icon{font-size:1.6rem;margin-bottom:6px}
+.symbol-card .label{font-size:.75rem;color:var(--ink-faded);font-weight:500}
+.symbol-card .sub{font-size:.7rem;color:var(--ink-light);margin-top:2px}
+
+/* ===== STEPS ===== */
+.steps{counter-reset:step;margin:20px 0}
+.step{padding:16px 20px 16px 56px;position:relative;margin-bottom:8px;background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius-md)}
+.step::before{
+  counter-increment:step;content:counter(step);
+  position:absolute;left:16px;top:16px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--bordeaux);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.75rem;font-weight:600;
+}
+.step strong{color:var(--bordeaux-dark)}
+
+/* ===== IMAGE BLOCK ===== */
+.img-block{margin:24px 0;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border);background:var(--paper-card)}
+.img-block img{width:100%}
+.img-block .cap{padding:10px 16px;font-size:.78rem;color:var(--ink-light);font-family:var(--font-mono);border-top:1px solid var(--border)}
+
+/* ===== GRID 2-COL ===== */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+
+/* ===== PROGRAM GUIDE FULL ===== */
+.prog-guide-full{margin:20px 0;border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;background:var(--paper-card)}
+.prog-guide-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.prog-guide-row:last-child{border-bottom:none}
+.prog-guide-row:nth-child(even){background:#fbf8f2}
+.prog-guide-row .prog-icon{font-size:1.3rem;flex-shrink:0;width:32px;text-align:center}
+.prog-guide-row .prog-info{flex:1;min-width:0}
+.prog-guide-row .prog-name{font-weight:600;color:var(--ink);font-size:.9rem}
+.prog-guide-row .prog-detail{font-family:var(--font-mono);font-size:.7rem;color:var(--bordeaux-light);margin-top:2px}
+.prog-badge{font-family:var(--font-mono);font-size:.65rem;font-weight:600;padding:3px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.prog-badge.ok{background:#eef5e8;color:#4a7a3a}
+.prog-badge.mid{background:#fef9ec;color:#9a7b1c}
+.prog-badge.low{background:#fdf2ec;color:#b7472a}
+
+/* ===== OVERLAY ===== */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:80;backdrop-filter:blur(2px)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1200px){
+  .right-sidebar{display:none}
+}
+@media(max-width:1024px){
+  :root{--nav-w:240px;font-size:16px}
+  .content{padding:32px 28px 60px}
+  #hero{padding:56px 28px 44px}
+  #hero h1{font-size:2.2rem}
+}
+@media(max-width:768px){
+  :root{font-size:15px;--header-h:60px}
+  .menu-btn{display:flex}
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .overlay{display:block;opacity:0;pointer-events:none;transition:opacity .35s}
+  .overlay.show{opacity:1;pointer-events:auto}
+  .main-wrap{margin-left:0}
+  .content{padding:24px 18px 48px}
+  #hero{padding:40px 18px 32px}
+  #hero h1{font-size:1.8rem}
+  .hero-meta{flex-wrap:wrap;gap:16px}
+  .grid-2{grid-template-columns:1fr}
+  .sidebar a{font-size:1rem;padding:12px 20px}
+  .sidebar .nav-label{padding:6px 20px 10px}
+  h2{font-size:1.4rem}
+  h3{font-size:1.1rem}
+  .table-wrap{font-size:.95rem}
+  td,th{padding:10px 12px}
+  .symbol-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+}
+@media(max-width:480px){
+  #hero h1{font-size:1.5rem}
+  .hero-desc{font-size:.95rem}
+  .step{padding:14px 16px 14px 48px}
+  .step::before{width:24px;height:24px;font-size:.65rem;left:12px;top:14px}
+  .content{padding:18px 14px 36px}
+  #hero{padding:32px 14px 24px}
+  h2{font-size:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <div class="logo-mark">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="2" y="10" width="24" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="14" cy="18" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M8 10V7a6 6 0 0 1 12 0v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="18" r="1.5" fill="currentColor"/>
+      </svg>
+      Rex RL40A
+    </div>
+    <button class="menu-btn" id="menuToggle" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== OVERLAY ===== -->
+<div class="overlay" id="overlay"></div>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <div class="nav-label">Indice</div>
+    <a href="#hero"><span class="num">00</span>Introduzione</a>
+    <a href="#sicurezza"><span class="num">01</span>Sicurezza</a>
+    <a href="#installazione"><span class="num">02</span>Installazione</a>
+    <a href="#pannello"><span class="num">03</span>Pannello Comandi</a>
+    <a href="#primo-ciclo"><span class="num">04</span>Primo Ciclo</a>
+    <a href="#programmi"><span class="num">05</span>Programmi</a>
+    <a href="#guida-pratica"><span class="num">05B</span>Guida Pratica</a>
+    <a href="#cotone"><span class="num">06</span>Cotone</a>
+    <a href="#delicati"><span class="num">07</span>Delicati</a>
+    <a href="#consigli"><span class="num">08</span>Consigli Lavaggio</a>
+    <a href="#macchie"><span class="num">09</span>Guida Macchie</a>
+    <a href="#durezza"><span class="num">10</span>Durezza Acqua</a>
+    <a href="#pulizia"><span class="num">11</span>Pulizia</a>
+    <a href="#manutenzione"><span class="num">12</span>Manutenzione</a>
+    <a href="#ricambi"><span class="num">13</span>Ricambi & Shop</a>
+    <a href="#dati-tecnici"><span class="num">14</span>Dati Tecnici</a>
+    <a href="#esperienza"><span class="num">15</span>Dall'Esperienza</a>
+  </nav>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<div class="main-wrap">
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-sup">Manuale d'Uso e Manutenzione</div>
+      <h1>Rex <em>RL40A</em></h1>
+      <p class="hero-desc">Guida completa all'uso, manutenzione e risoluzione dei problemi per la lavatrice Rex RL40A. Include programmi di lavaggio, dati tecnici e ricambi originali.</p>
+      <div class="hero-meta">
+        <span><span class="tag">Modello</span> RL40A</span>
+        <span><span class="tag">Classe</span> A+++</span>
+        <span><span class="tag">Capacità</span> 7 kg</span>
+        <span><span class="tag">Giri</span> 1200 rpm</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- 01 SICUREZZA -->
+    <section id="sicurezza">
+      <div class="section-header"><span class="section-num">01</span><h2>Sicurezza</h2></div>
+      <p>Leggere attentamente le istruzioni prima dell'installazione e del primo utilizzo. Conservare il manuale per future consultazioni.</p>
+      <div class="alert warn"><strong>Attenzione:</strong> Non utilizzare mai la lavatrice se il cavo di alimentazione è danneggiato. Non tentare riparazioni fai-da-te.</div>
+      <div class="alert info"><strong>Nota:</strong> L'apparecchio può essere utilizzato da bambini di età ≥8 anni e da persone con ridotte capacità fisiche, purché supervisionati.</div>
+      <div class="alert"><strong>Ricorda:</strong> Non caricare capi trattati con solventi infiammabili. Scollegare sempre la lavatrice prima della pulizia.</div>
+    </section>
+
+    <!-- 02 INSTALLAZIONE -->
+    <section id="installazione">
+      <div class="section-header"><span class="section-num">02</span><h2>Installazione</h2></div>
+      <p>L'installazione deve essere eseguita da personale qualificato. Posizionare la lavatrice su una superficie piana e stabile.</p>
+      <div class="steps">
+        <div class="step"><strong>Rimozione imballo:</strong> Rimuovere la pellicola protettiva e i fermi di trasporto.</div>
+        <div class="step"><strong>Livellamento:</strong> Regolare i piedini per garantire stabilità e ridurre vibrazioni.</div>
+        <div class="step"><strong>Allacci idrici:</strong> Collegare il tubo di carico alla presa d'acqua (3/4"). Aprire il rubinetto.</div>
+        <div class="step"><strong>Scarico:</strong> Fissare il tubo di scarico al sifone o al bordo del lavello.</div>
+        <div class="step"><strong>Alimentazione:</strong> Collegare la spina a una presa con messa a terra (230 V ~ 50 Hz).</div>
+      </div>
+      <div class="alert warn">Non utilizzare prolunghe o adattatori multipli. La presa deve essere facilmente accessibile.</div>
+    </section>
+
+    <!-- 03 PANNELLO -->
+    <section id="pannello">
+      <div class="section-header"><span class="section-num">03</span><h2>Pannello Comandi</h2></div>
+      <div class="img-block">
+        <img src="images/rl40a_page_04.png" alt="Pannello comandi RL40A">
+        <div class="cap">Pannello comandi — Rex RL40A</div>
+      </div>
+      <p>La pulsantiera e la manopola selettrice consentono di impostare il programma desiderato e le opzioni di lavaggio.</p>
+      <div class="grid-2">
+        <div class="alert info"><strong>Manopola:</strong> Seleziona il programma (Cotone, Sintetici, Delicati, Lana, Rapido, ecc.)</div>
+        <div class="alert info"><strong>Display:</strong> Mostra tempo residuo, temperatura, centrifuga e opzioni attive.</div>
+      </div>
+    </section>
+
+    <!-- 04 PRIMO CICLO -->
+    <section id="primo-ciclo">
+      <div class="section-header"><span class="section-num">04</span><h2>Primo Ciclo</h2></div>
+      <p>Prima del primo lavaggio con biancheria, eseguire un ciclo a vuoto per pulire l'interno della macchina.</p>
+      <div class="steps">
+        <div class="step"><strong>Caricare:</strong> Nessun carico — macchina vuota.</div>
+        <div class="step"><strong>Detersivo:</strong> Versare ½ misurino di detersivo nella vaschetta.</div>
+        <div class="step"><strong>Programma:</strong> Selezionare il programma Cotone a 90 °C.</div>
+        <div class="step"><strong>Avvio:</strong> Premere il tasto Start/Pausa e attendere il completamento.</div>
+      </div>
+    </section>
+
+    <!-- 05 PROGRAMMI -->
+    <section id="programmi">
+      <div class="section-header"><span class="section-num">05</span><h2>Programmi di Lavaggio</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Programma</th><th>Temp.</th><th>Giri</th><th>Durata</th><th>Carico max</th></tr></thead>
+          <tbody>
+            <tr><td>Cotone</td><td>40–90 °C</td><td>1200 rpm</td><td>110–165 min</td><td>7 kg</td></tr>
+            <tr><td>Cotone Eco</td><td>20–60 °C</td><td>1200 rpm</td><td>159–205 min</td><td>7 kg</td></tr>
+            <tr><td>Sintetici</td><td>40–60 °C</td><td>900 rpm</td><td>75–100 min</td><td>3 kg</td></tr>
+            <tr><td>Delicati</td><td>30–40 °C</td><td>600 rpm</td><td>55–80 min</td><td>2 kg</td></tr>
+            <tr><td>Lana</td><td>30–40 °C</td><td>600 rpm</td><td>45–60 min</td><td>1.5 kg</td></tr>
+            <tr><td>Rapido 30'</td><td>30 °C</td><td>800 rpm</td><td>30 min</td><td>2 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 05B GUIDA PRATICA -->
+    <section id="guida-pratica">
+      <div class="section-header"><span class="section-num">05B</span><h2>Guida Pratica per Tipo di Indumento</h2></div>
+      <p>Quale programma usare in base a cosa devi lavare. Guida rapida dalla community di utenti RL40A.</p>
+      <div class="prog-guide-full">
+        <div class="prog-guide-row">
+          <span class="prog-icon">🛏️</span>
+          <div class="prog-info">
+            <div class="prog-name">Lenzuola, federe, coperta</div>
+            <div class="prog-detail">Cotone · 60 °C · Prelavaggio · Centrifuga max</div>
+          </div>
+          <span class="prog-badge ok">7 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">🧖</span>
+          <div class="prog-info">
+            <div class="prog-name">Asciugamani</div>
+            <div class="prog-detail">Cotone · 60 °C · Centrifuga max (1200 rpm)</div>
+          </div>
+          <span class="prog-badge ok">7 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">👔</span>
+          <div class="prog-info">
+            <div class="prog-name">Camicie, magliette, felpe</div>
+            <div class="prog-detail">Sintetici · 40 °C · Centrifuga media (900 rpm)</div>
+          </div>
+          <span class="prog-badge mid">3 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">👖</span>
+          <div class="prog-info">
+            <div class="prog-name">Jeans, pantaloni, giacche</div>
+            <div class="prog-detail">Sintetici · 40 °C · Centrifuga media (900 rpm)</div>
+          </div>
+          <span class="prog-badge mid">3 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">🧦</span>
+          <div class="prog-info">
+            <div class="prog-name">Calze, biancheria intima</div>
+            <div class="prog-detail">Sintetici · 40 °C · Centrifuga ridotta (600 rpm)</div>
+          </div>
+          <span class="prog-badge mid">3 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">🧣</span>
+          <div class="prog-info">
+            <div class="prog-name">Lana, cashmere, merino</div>
+            <div class="prog-detail">Lana · 30 °C · Centrifuga ridotta (600 rpm)</div>
+          </div>
+          <span class="prog-badge low">1,5 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">👗</span>
+          <div class="prog-info">
+            <div class="prog-name">Seta, viscosa, tessuti delicati</div>
+            <div class="prog-detail">Delicati · 30 °C · Centrifuga ridotta (600 rpm)</div>
+          </div>
+          <span class="prog-badge low">2 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">🏃</span>
+          <div class="prog-info">
+            <div class="prog-name">Abbigliamento sportivo, tecnici</div>
+            <div class="prog-detail">Sintetici · 30 °C · Centrifuga media (800 rpm)</div>
+          </div>
+          <span class="prog-badge mid">3 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">🧸</span>
+          <div class="prog-info">
+            <div class="prog-name">Peluche, capi bambino</div>
+            <div class="prog-detail">Delicati · 30 °C · Centrifuga ridotta (600 rpm)</div>
+          </div>
+          <span class="prog-badge low">2 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">⏱️</span>
+          <div class="prog-info">
+            <div class="prog-name">Poco sporco / urgente</div>
+            <div class="prog-detail">Rapido 30' · 30 °C · Centrifuga media (800 rpm)</div>
+          </div>
+          <span class="prog-badge low">2 kg</span>
+        </div>
+        <div class="prog-guide-row">
+          <span class="prog-icon">🧹</span>
+          <div class="prog-info">
+            <div class="prog-name">Tappeti, coperte pesanti</div>
+            <div class="prog-detail">Cotone · 40 °C · Prelavaggio · Centrifuga max</div>
+          </div>
+          <span class="prog-badge ok">7 kg</span>
+        </div>
+      </div>
+      <div class="alert info" style="margin-top:20px"><strong>Regola d'oro:</strong> non riempire il cesto oltre metà per i capi ingombranti (lane, coperte). La centrifuga funziona meglio con carichi bilanciati.</div>
+    </section>
+
+    <!-- 06 COTONE -->
+    <section id="cotone">
+      <div class="section-header"><span class="section-num">06</span><h2>Programma Cotone</h2></div>
+      <p>Il programma Cotone è ideale per biancheria resistente al calore (lenzuola, asciugamani, biancheria intima).</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opzione</th><th>40 °C</th><th>60 °C</th><th>90 °C</th></tr></thead>
+          <tbody>
+            <tr><td>Durata</td><td>110 min</td><td>130 min</td><td>165 min</td></tr>
+            <tr><td>Acqua (L)</td><td>59</td><td>64</td><td>72</td></tr>
+            <tr><td>Energia (kWh)</td><td>0.65</td><td>1.05</td><td>1.85</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="img-block">
+        <img src="images/rl40a_page_05.png" alt="Programma Cotone">
+        <div class="cap">Dettaglio programma Cotone</div>
+      </div>
+    </section>
+
+    <!-- 07 DELICATI -->
+    <section id="delicati">
+      <div class="section-header"><span class="section-num">07</span><h2>Programma Delicati</h2></div>
+      <p>Per capi in tessuti sintetici leggeri, misti e seta. Centrifuga a velocità ridotta per proteggere i tessuti.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opzione</th><th>30 °C</th><th>40 °C</th></tr></thead>
+          <tbody>
+            <tr><td>Durata</td><td>55 min</td><td>80 min</td></tr>
+            <tr><td>Acqua (L)</td><td>50</td><td>55</td></tr>
+            <tr><td>Energia (kWh)</td><td>0.35</td><td>0.55</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 08 CONSIGLI -->
+    <section id="consigli">
+      <div class="section-header"><span class="section-num">08</span><h2>Consigli di Lavaggio</h2></div>
+      <h3>Simboli di Manutenzione</h3>
+      <div class="symbol-grid">
+        <div class="symbol-card"><div class="icon">🫧</div><div class="label">Lavaggio max 95 °C</div><div class="sub">Cotone/Lino</div></div>
+        <div class="symbol-card"><div class="icon">🧺</div><div class="label">Lavaggio max 60 °C</div><div class="sub">Sintetici</div></div>
+        <div class="symbol-card"><div class="icon">🌡️</div><div class="label">Lavaggio max 40 °C</div><div class="sub">Delicati</div></div>
+        <div class="symbol-card"><div class="icon">🧤</div><div class="label">Lavaggio a mano</div><div class="sub">30 °C max</div></div>
+        <div class="symbol-card"><div class="icon">❌</div><div class="label">Non lavare</div><div class="sub">Solo chimica</div></div>
+        <div class="symbol-card"><div class="icon">☀️</div><div class="label">Asciugatura naturale</div><div class="sub">Stendere all'ombra</div></div>
+      </div>
+      <div class="alert">Separare sempre i capi bianchi da quelli colorati. Chiudere cerniere e bottoni prima del lavaggio.</div>
+    </section>
+
+    <!-- 09 MACCHIE -->
+    <section id="macchie">
+      <div class="section-header"><span class="section-num">09</span><h2>Guida alle Macchie</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Macchia</th><th>Trattamento</th><th>Temp.</th></tr></thead>
+          <tbody>
+            <tr><td>Vino rosso</td><td>Immergere in acqua fredda, applicare sale o aceto bianco</td><td>40 °C</td></tr>
+            <tr><td>Erba</td><td>Trattare con alcool denaturato, poi lavare con smacchiatore ossigenato</td><td>60 °C</td></tr>
+            <tr><td>Sangue</td><td>Sciacquare immediatamente in acqua fredda, non usare acqua calda</td><td>30 °C</td></tr>
+            <tr><td>Grasso/Olio</td><td>Applicare talco o detersivo liquido, lasciare agire 15 min</td><td>40 °C</td></tr>
+            <tr><td>Caffè/Tè</td><td>Immergere in acqua tiepida con bicarbonato, poi lavaggio normale</td><td>60 °C</td></tr>
+            <tr><td>Cioccolato</td><td>Spazzolare via il secco, pretrattare con detersivo liquido</td><td>40 °C</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10 DUREZZA -->
+    <section id="durezza">
+      <div class="section-header"><span class="section-num">10</span><h2>Durezza dell'Acqua</h2></div>
+      <p>La durezza dell'acqua influisce sul consumo di detersivo. Regolare il dosaggio in base alla scala di durezza.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Livello</th><th>°dH</th><th>mmol/L</th><th>Detersivo</th></tr></thead>
+          <tbody>
+            <tr><td>Morbida</td><td>0–8</td><td>0–1.4</td><td>Ridurre del 20%</td></tr>
+            <tr><td>Media</td><td>9–14</td><td>1.5–2.5</td><td>Dosaggio normale</td></tr>
+            <tr><td>Media</td><td>15–21</td><td>2.6–3.7</td><td>Dosaggio normale</td></tr>
+            <tr><td>Molto dura</td><td>>21</td><td>>3.7</td><td>Aumentare del 20%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 11 PULIZIA -->
+    <section id="pulizia">
+      <div class="section-header"><span class="section-num">11</span><h2>Pulizia</h2></div>
+      <div class="steps">
+        <div class="step"><strong>Vaschetta detersivo:</strong> Estrarre la vaschetta, sciacquare sotto acqua corrente e rimontare.</div>
+        <div class="step"><strong>Filtro pompa:</strong> Svitare il tappo del filtro, rimuovere residui e riavvitare.</div>
+        <div class="step"><strong>Gomma oblò:</strong> Pulire con un panno umido per prevenire muffe e cattivi odori.</div>
+        <div class="step"><strong>Cesto:</strong> Eseguire un ciclo di pulizia a 90 °C con sbiancante una volta al mese.</div>
+      </div>
+      <div class="alert warn">Scollegare sempre la lavatrice prima di qualsiasi operazione di pulizia interna.</div>
+    </section>
+
+    <!-- 12 MANUTENZIONE -->
+    <section id="manutenzione">
+      <div class="section-header"><span class="section-num">12</span><h2>Manutenzione</h2></div>
+      <div class="img-block">
+        <img src="images/rl40a_page_09.png" alt="Manutenzione RL40A">
+        <div class="cap">Manutenzione ordinaria — Rex RL40A</div>
+      </div>
+      <p>Controllare periodicamente il tubo di carico per eventuali crepe o perdite. Sostituire il tubo ogni 5 anni.</p>
+      <p>Per la manutenzione straordinaria contattare un centro assistenza autorizzato.</p>
+    </section>
+
+    <!-- 13 RICAMBI -->
+    <section id="ricambi">
+      <div class="section-header"><span class="section-num">13</span><h2>Ricambi Originali</h2></div>
+      <p>Ricambi originali Electrolux per Rex RL40A (codice PNC <strong>91478021300</strong>). Disponibili su <a href="https://shop.electrolux.it/search?pnc=91478021300" target="_blank" rel="noopener">shop.electrolux.it</a>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>Ricambio</th><th>Codice</th><th>Prezzo</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/7bc97ae7-aad9-4c3c-9ff9-b70e39db2932/E4RM3Q/PSGBAP180PP0040N/PV/PSGBAP180PP0040N.jpg" alt="bullone ammortizzatore" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>bullone, ammortizzatore 14,3x72</td><td>1327804017</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 5,80</span><br>€ 4,64</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/cestello/bullone-ammortizzatore-14-3x72/p/1327804017" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/38d704ea-853f-4b2b-81ca-591cd9f44e3d/E4RM3Q/PSGBAP170PW0010I/PV/PSGBAP170PW0010I.jpg" alt="Sigillo filtro" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Sigillo del filtro della lavatrice</td><td>1260616014</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 12,99</span><br>€ 10,40</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/filtri/sigillo-del-filtro-della-lavatrice/p/1260616014" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/15123a2f-915a-4e3f-aec4-2157f36fa24c/E4RM3Q/PSGBAP190PP0050F/PV/PSGBAP190PP0050F.jpg" alt="Cassetto detersivo" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Cassetto detersivo, parete divi</td><td>140033852041</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 45,99</span><br>€ 39,10</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/vaschette-detersivo/cassetto-detersivo-parete-divi/p/140033852041" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/82b0c8b5-9e51-49cd-8ae5-f2b4b0bab5b6/E4RM3Q/PSGBAP170PW00GBI/PV/PSGBAP170PW00GBI.jpg" alt="Copri filtro pompa" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Copri filtro pompa della lavatrice</td><td>1320711003</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 6,99</span><br>€ 5,95</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/motori-e-pompe/copri-filtro-pompa-della-lavatrice/p/1320711003" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/f2174dd3-ecb1-47ff-8819-51dafec943a3/E4RM3Q/PSGBAP170PW00GO3/PV/PSGBAP170PW00GO3.jpg" alt="Anello blocco guarnizione" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Anello di blocco della guarnizione</td><td>1320552001</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 8,99</span><br>€ 7,20</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/elementi-porta/anello-di-blocco-della-guarnizione-della-lavatrice/p/1320552001" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/2e2474f0-9315-4f08-aa76-b2189ab5d94f/E4RM3Q/PSGBAP170PW0040M/PV/PSGBAP170PW0040M.jpg" alt="Molla sicurezza oblò" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Molla di sicurezza per oblò</td><td>1240673135</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 6,09</span><br>€ 4,88</td><td><a href="https://shop.electrolux.it/lavaggio/asciugatrici/elementi-porta/molla-di-sicurezza-per-oblo/p/1240673135" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/a3be25ef-1023-4a71-b94f-f5ab9de0f333/E4RM3Q/PSGBAP170PW00GOL/PV/PSGBAP170PW00GOL.jpg" alt="Guarnizione oblò" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Guarnizione in gomma per l'oblò</td><td>1321091025</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 51,00</span><br>€ 40,80</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/elementi-porta/guarnizione-in-gomma-per-l-obl-della-lavatrice/p/1321091025" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/33ee61d1-cd29-4bbd-91b9-81e54e329ff7/E4RM3Q/PSGBAP170PW0046S/PV/PSGBAP170PW0046S.jpg" alt="Vite motore" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Vite per motore</td><td>1240222016</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 3,09</span><br>€ 2,48</td><td><a href="https://shop.electrolux.it/lavaggio/asciugatrici/motori-e-ventole/vite-per-motore/p/1240222016" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/bc35db38-6f2b-4fa4-b944-d83f4013e6de/E4RM3Q/PSGBAP170PW004EU/PV/PSGBAP170PW004EU.jpg" alt="Guarnizione vasca" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Guarnizione vasca della lavatrice</td><td>1240159036</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 25,99</span><br>€ 20,80</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/cestello/guarnizione-vasca-della-lavatrice/p/1240159036" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/0deff7e2-5a65-4850-a0bd-339555efd3d5/E4RM3Q/PSGBAP170PW00FSE/PV/PSGBAP170PW00FSE.jpg" alt="Piede sospensione" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Piede di sospensione per lavatrice</td><td>1322553015</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 20,00</span><br>€ 16,00</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/cestello/piede-di-sospensione-per-lavatrice/p/1322553015" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/faacdf0d-aa07-4375-b2b4-c4d927e16047/E4RM3Q/PSGBAP230PP009RU/PV/PSGBAP230PP009RU.jpg" alt="Elemento riscaldante" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Elemento riscaldante con sensore</td><td>8581325347004</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 36,99</span><br>€ 29,60</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/resistenze/elemento-riscaldante-con-sensore/p/8581325347004" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/ef5893d4-2cec-4392-996f-9eb350adf495/E4RM3Q/PSGBAP170PW00FXE/PV/PSGBAP170PW00FXE.jpg" alt="Filtro pompa" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Filtro per pompa della lavatrice</td><td>1321368118</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 12,99</span><br>€ 10,40</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/motori-e-pompe/filtro-per-pompa-della-lavatrice/p/1321368118" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/f36de12b-ee1c-4000-a5ed-618d60a53e0a/E4RM3Q/PSGBAP170PW00GAY/PV/PSGBAP170PW00GAY.jpg" alt="Protezione sicurezza oblò" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Protezione dispositivo sicurezza oblò</td><td>1321444208</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 5,69</span><br>€ 4,84</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/elementi-porta/protezione-per-dispositivo-di-sicurezza-per-l-oblo-della-lavatrice/p/1321444208" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/a3e8b570-5caf-4a40-9259-a5b7374f105d/E4RM3Q/PSGBAP170PW00G80/PV/PSGBAP170PW00G80.jpg" alt="Tubo uscita acqua" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Tubo di uscita per l'acqua</td><td>1320365057</td><td><span style="text-decoration:line-through;color:#999;font-size:.75rem">€ 15,99</span><br>€ 12,80</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/tubi-flessibili/tubo-di-uscita-per-l-acqua/p/1320365057" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/96b8809a-f8cb-400f-bbe0-f5116474d53c/E4RM3Q/PSGBAP170PW008UZ/PV/PSGBAP170PW008UZ.jpg" alt="Battitore cestello" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Battitore per cestello della lavatrice</td><td>50252271007</td><td>€ 20,98</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/cestello/battitore-per-cestello-della-lavatrice/p/50252271007" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/01cc635d-18b3-47f5-86fb-174f8aca41fc/E4RM3Q/PSGBAP210PP002OE/PV/PSGBAP210PP002OE.jpg" alt="Fascetta d=59mm" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Fascetta, d=59mm</td><td>1246646010</td><td>€ 2,59</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/vaschette-detersivo/fascetta-d-59mm/p/1246646010" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/99c6e018-810f-4e31-9bc4-8052c2330680/E4RM3Q/PSGBAP200PP000U1/PV/PSGBAP200PP000U1.jpg" alt="Vite fondovasca" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Vite per fondovasca per lavatrice</td><td>1322290105</td><td>€ 3,09</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/cestello/vite-per-fondovasca-per-lavatrice/p/1322290105" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/1e904247-164d-43d0-a550-582284c7c9ef/E4RM3Q/PSGBAP170PW00132/PV/PSGBAP170PW00132.jpg" alt="Molla blocco riscaldante" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Molla di blocco per elemento riscaldante</td><td>1247825100</td><td>€ 6,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/resistenze/molla-di-blocco-per-elemento-riscaldante-per-lavatrice/p/1247825100" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/635b1355-9503-4222-b5d8-8a193fd99f0f/E4RM3Q/PSGBAP180PP004Y8/PV/PSGBAP180PP004Y8.jpg" alt="Gruppo cerniera oblò" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Gruppo cerniera per l'oblò</td><td>1323641009</td><td>€ 28,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/elementi-porta/gruppo-cerniera-per-l-obl-della-lavabiancheria/p/1323641009" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/26ad13e5-0c56-4c1f-ae4e-8ed4090ae882/E4RM3Q/PSGBAP170PW008V6/PV/PSGBAP170PW008V6.jpg" alt="Cuscinetto" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Cuscinetto per lavatrice</td><td>50246818004</td><td>€ 18,00</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/cuscinetti/cuscinetto-per-lavatrice/p/50246818004" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/8a30b957-40ff-4ef1-a5df-4b274fa5cff7/E4RM3Q/PSGBAP200PP000J7/PV/PSGBAP200PP000J7.jpg" alt="Vaschetta convogliatore" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Vaschetta convogliatore detersivo</td><td>1246246316</td><td>€ 55,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/vaschette-detersivo/vaschetta-del-contenitore-per-convogliatore-del-detersivo-per-lavatrice/p/1246246316" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/85e7a3e8-c709-4e17-bda4-10864b833a59/E4RM3Q/PSGBAP180PP0022N/PV/PSGBAP180PP0022N.jpg" alt="Guarnizione valvola" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Guarnizione per valvola di ingresso</td><td>1240151025</td><td>€ 12,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/guarnizioni/guarnizione-per-valvola-di-ingresso/p/1240151025" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/d07dfa0e-9c7f-465d-9dfa-880bd95350bd/E4RM3Q/PSGBAP210PP005AV/PV/PSGBAP210PP005AV.jpg" alt="Perno erogatore" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Perno per erogatore d'acqua</td><td>1240042000</td><td>€ 5,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/vaschette-detersivo/perno-per-erogatore-d-acqua-per-lavatrice/p/1240042000" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/99859518-7a0a-4df2-80f2-350b70ca92d6/E4RM3Q/PSGBAP170PW00GII/PV/PSGBAP170PW00GII.jpg" alt="Gruppo tubo scarico" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Gruppo tubo flessibile di scarico</td><td>1320721044</td><td>€ 20,98</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/tubi-flessibili/gruppo-tubo-flessibile-di-scarico-per-lavatrice/p/1320721044" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/73cebcd4-2c93-45ef-8936-3927ef258d4d/E4RM3Q/PSGBAP170PW00GX7/PV/PSGBAP170PW00GX7.jpg" alt="Pulsante sicurezza oblò" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Pulsante di sicurezza per oblò</td><td>1320163007</td><td>€ 13,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/manopole-e-comandi/pulsante-di-sicurezza-per-oblo-della-lavatrice/p/1320163007" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/d24da7e5-240f-4e39-80b3-cf37ec365d82/E4RM3Q/PSGBAP170PW00128/PV/PSGBAP170PW00128.jpg" alt="Vetro oblò" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Vetro per l'oblò della lavatrice</td><td>1260581002</td><td>€ 56,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/elementi-porta/vetro-per-l-oblo-della-lavatrice/p/1260581002" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/913a60c3-279b-4e57-ba1d-dac6d0e2fd9d/E4RM3Q/PSGBAP170PW0017A/PV/PSGBAP170PW0017A.jpg" alt="Estremità tubo scarico" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Estremità per tubo flessibile di scarico</td><td>1242916003</td><td>€ 5,59</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/tubi-flessibili/estremita-per-tubo-flessibile-di-scarico/p/1242916003" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/4b7b2896-02ba-45ff-8801-1d5217e0217e/E4RM3Q/PSGBAP170PW00GN0/PV/PSGBAP170PW00GN0.jpg" alt="Gruppo corpo pompa" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Gruppo corpo pompa per lavatrice</td><td>1320715269</td><td>€ 39,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/motori-e-pompe/gruppo-corpo-pompa-per-lavatrice/p/1320715269" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/5b061449-1584-4eb1-8e15-856922258c5d/E4RM3Q/PSGBAP200PP002HS/PV/PSGBAP200PP002HS.jpg" alt="Piastra temperatura" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Gruppo piastra indicazione temperatura</td><td>1320581018</td><td>€ 19,00</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/manopole-e-comandi/gruppo-per-piastra-di-indicazione-della-temperatura-per-lavatrice/p/1320581018" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/ada22aaa-2142-4090-9011-c3a833a7b0d6/E4RM3Q/PSGBAP170PW0046Q/PV/PSGBAP170PW0046Q.jpg" alt="Vite cuscinetto" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Vite cuscinetto</td><td>1240220200</td><td>€ 3,18</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/cestello/vite-cuscinetto/p/1240220200" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/c7bd0eb8-eace-4ee0-a67b-1592cd3e8294/E4RM3Q/PSGBAP170PW0041B/PV/PSGBAP170PW0041B.jpg" alt="Anello collegamento guarnizione" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Anello collegamento interno guarnizione porta</td><td>1240477024</td><td>€ 8,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/guarnizioni/anello-di-collegamento-interno-per-guarnizione-porta/p/1240477024" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/b91c65b9-daf3-4b60-bd52-53e9b8986788/E4RM3Q/PSGBAP170PW00G7G/PV/PSGBAP170PW00G7G.jpg" alt="Tubo ingresso acqua" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Tubo ingresso acqua (1500 mm)</td><td>1325115911</td><td>€ 34,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/tubi-flessibili/tubo-di-ingresso-dell-acqua-per-lavatrice-lunghezza-1500-m/p/1325115911" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/736ebfa0-2089-42c4-a9ff-ada35f28e38a/E4RM3Q/PSGBAP170PW00140/PV/PSGBAP170PW00140.jpg" alt="Camera d'aria" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Camera d'aria a 1 via per lavatrice</td><td>1243071105</td><td>€ 19,00</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/piedini-e-alloggiamento/camera-d-aria-a-1-via-per-lavatrice/p/1243071105" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/0ce88396-799a-417d-8130-a91239604ccf/E4RM3Q/PSGBAP170PW00DNZ/PV/PSGBAP170PW00DNZ.jpg" alt="Assorbitore urto" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Assorbitore d'urto per lavatrice</td><td>3794303010</td><td>€ 20,98</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/piedini-e-alloggiamento/assorbitore-d-urto-per-lavatrice/p/3794303010" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/4d2511e3-2cca-4878-a993-205cfae89713/E4RM3Q/PSGBAP170PW0044D/PV/PSGBAP170PW0044D.jpg" alt="Molla sospensione vasca" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Molla di sospensione per vasca</td><td>1240195709</td><td><em style="color:#999;font-size:.75rem">Esaurito</em></td><td></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/89c9a2b9-7f84-4853-8c29-63b4dfe1c57b/E4RM3Q/PSGBAP190PP003N5/PV/PSGBAP190PP003N5.jpg" alt="Guarnizione cuscinetto cestello" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Guarnizione cuscinetto cestello</td><td>50063248004</td><td>€ 14,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/guarnizioni/guarnizione-per-cuscinetto-del-cestello-della-lavatrice/p/50063248004" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+            <tr><td><img src="https://api.electrolux-medialibrary.com/asset/0fd55a69-7814-45b9-910e-648803a0394d/E4RM3Q/PSGBAP230PP006TS/PV/PSGBAP230PP006TS.jpg" alt="Elettrovalvola" width="48" height="48" loading="lazy" style="border-radius:4px;object-fit:contain;background:#f5f5f5"></td><td>Elettrovalvola</td><td>8583792260439</td><td>€ 30,99</td><td><a href="https://shop.electrolux.it/lavaggio/lavatrici/elettronica/elettrovalvola/p/8583792260439" target="_blank" rel="noopener" class="btn-link">Acquista</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 14 DATI TECNICI -->
+    <section id="dati-tecnici">
+      <div class="section-header"><span class="section-num">14</span><h2>Dati Tecnici</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Parametro</th><th>Valore</th></tr></thead>
+          <tbody>
+            <tr><td>Modello</td><td>Rex RL40A</td></tr>
+            <tr><td>PNC</td><td>91478021300</td></tr>
+            <tr><td>Capacità max</td><td>7 kg</td></tr>
+            <tr><td>Velocità max centrifuga</td><td>1200 rpm</td></tr>
+            <tr><td>Classe energetica</td><td>A+++</td></tr>
+            <tr><td>Tensione</td><td>220–240 V ~ 50 Hz</td></tr>
+            <tr><td>Corrente</td><td>10 A</td></tr>
+            <tr><td>Potenza max assorbita</td><td>2200 W</td></tr>
+            <tr><td>Consumo acqua annuo</td><td>~9500 L</td></tr>
+            <tr><td>Consumo energia annuo</td><td>~175 kWh</td></tr>
+            <tr><td>Pressione acqua</td><td>0.1–1 MPa (1–10 bar)</td></tr>
+            <tr><td>Larghezza</td><td>595 mm</td></tr>
+            <tr><td>Altezza</td><td>850 mm</td></tr>
+            <tr><td>Profondità</td><td>540 mm</td></tr>
+            <tr><td>Peso netto</td><td>~67 kg</td></tr>
+            <tr><td>Lunghezza cavo</td><td>1.5 m</td></tr>
+            <tr><td>Lunghezza tubo carico</td><td>1.2 m</td></tr>
+            <tr><td>Lunghezza tubo scarico</td><td>1.5 m</td></tr>
+            <tr><td>Classe rumorosità</td><td>C (76 dB)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 15 ESPERIENZA -->
+    <section id="esperienza">
+      <div class="section-header"><span class="section-num">15</span><h2>Dall'Esperienza degli Utenti</h2></div>
+      <p>Consigli pratici raccolti da utenti Rex RL40A per ottimizzare il lavaggio e prolungare la vita della macchina.</p>
+
+      <h3>Programmi Consigliati</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Utilizzo</th><th>Programma</th><th>Temp.</th><th>Extra</th></tr></thead>
+          <tbody>
+            <tr><td>Biancheria letto</td><td>Cotone</td><td>60 °C</td><td>Prelavaggio</td></tr>
+            <tr><td>Asciugamani</td><td>Cotone</td><td>60 °C</td><td>Centrifuga max</td></tr>
+            <tr><td>Camicie</td><td>Sintetici</td><td>40 °C</td><td>Centrifuga ridotta</td></tr>
+            <tr><td>Lana</td><td>Lana</td><td>30 °C</td><td>Centrifuga ridotta</td></tr>
+            <tr><td>Poco sporco</td><td>Rapido 30'</td><td>30 °C</td><td>Carico ridotto</td></tr>
+            <tr><td>Misto quotidiano</td><td>Misto</td><td>40 °C</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Detersivo: Dosaggio Consigliato</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Durezza</th><th>Detersivo polvere</th><th>Detersivo liquido</th></tr></thead>
+          <tbody>
+            <tr><td>Morbida (0–8 °dH)</td><td>80 ml</td><td>60 ml</td></tr>
+            <tr><td>Media (9–21 °dH)</td><td>100 ml</td><td>75 ml</td></tr>
+            <tr><td>Molto dura (&gt;21 °dH)</td><td>120 ml</td><td>90 ml</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Marche Detersivo Più Usate</h3>
+      <p>Secondo l'esperienza degli utenti, le marche più efficaci con la RL40A sono: <strong>Bio Presto</strong> (polvere e liquido), <strong>Dash</strong> (capsule), <strong>Neutro</strong> (ipoallergenico), e <strong>Sapone di Marsiglia</strong> (tradizionale).</p>
+
+      <h3>Anticalcare Consigliati</h3>
+      <p>Per la manutenzione dell'RL40A, gli utenti raccomandano l'uso di anticalcare <strong>Bio Presto</strong> o <strong>Cillit Bang</strong>. In alternativa, acido citrico diluito (100 g in 1 L d'acqua) una volta ogni 3 mesi.</p>
+
+      <h3>Pulizia Periodica</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Operazione</th><th>Ogni</th></tr></thead>
+          <tbody>
+            <tr><td>Pulizia filtro pompa</td><td>1–2 mesi</td></tr>
+            <tr><td>Pulizia vaschetta detersivo</td><td>2 mesi</td></tr>
+            <tr><td>Pulizia gomma oblò</td><td>Settimanale</td></tr>
+            <tr><td>Ciclo autopulizia (90 °C)</td><td>1 mese</td></tr>
+            <tr><td>Trattamento anticalcare</td><td>3 mesi</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Errori Comuni</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Errore</th><th>Causa</th><th>Soluzione</th></tr></thead>
+          <tbody>
+            <tr><td>E10</td><td>Mancanza acqua</td><td>Aprire rubinetto, controllare tubo</td></tr>
+            <tr><td>E20</td><td>Scarico ostruito</td><td>Pulire filtro pompa</td></tr>
+            <tr><td>E30</td><td>Sportello non chiuso</td><td>Chiudere correttamente lo sportello</td></tr>
+            <tr><td>E40</td><td>Sovraccarico</td><td>Ridurre il carico di biancheria</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+
+  <!-- ===== RIGHT SIDEBAR ===== -->
+  <aside class="right-sidebar">
+
+    <!-- Quick Specs -->
+    <div class="rs-block">
+      <div class="rs-block-title">Scheda Rapida</div>
+      <div class="rs-spec"><span class="label">Modello</span><span class="value">RL40A</span></div>
+      <div class="rs-spec"><span class="label">PNC</span><span class="value">91478021300</span></div>
+      <div class="rs-spec"><span class="label">Capacità</span><span class="value">7 kg</span></div>
+      <div class="rs-spec"><span class="label">Giri max</span><span class="value">1200 rpm</span></div>
+      <div class="rs-spec"><span class="label">Classe</span><span class="value">A+++</span></div>
+      <div class="rs-spec"><span class="label">Potenza</span><span class="value">2200 W</span></div>
+      <div class="rs-spec"><span class="label">Misure</span><span class="value">595×850×540</span></div>
+    </div>
+
+    <!-- User Reviews -->
+    <div class="rs-block">
+      <div class="rs-block-title">Recensioni Utenti</div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">"Silenziosa anche a 1200 giri. Ottimo rapporto qualità-prezzo. Uso da 2 anni senza problemi."</div>
+        <div class="reviewer">— Marco R.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <div class="review-text">"Programma rapido 30' comodissimo per il quotidiano. Unico neo: la vaschetta detersivo è un po' stretta."</div>
+        <div class="reviewer">— Giulia F.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">"Lavaggio impeccabile anche a 40°C. Consumo davvero basso rispetto alla vecchia lavatrice."</div>
+        <div class="reviewer">— Andrea P.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <div class="review-text">"Ottima per famiglie di 3-4 persone. Il programma lana è delicato ma efficace."</div>
+        <div class="reviewer">— Sara M.</div>
+      </div>
+    </div>
+
+    <!-- Maintenance Checklist -->
+    <div class="rs-block">
+      <div class="rs-block-title">Manutenzione</div>
+      <div class="maint-item">
+        <input type="checkbox" id="m1">
+        <label for="m1">Pulizia gomma oblò</label>
+        <span class="maint-freq">settimanale</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m2">
+        <label for="m2">Pulizia filtro pompa</label>
+        <span class="maint-freq">1-2 mesi</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m3">
+        <label for="m3">Pulizia vaschetta detersivo</label>
+        <span class="maint-freq">2 mesi</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m4">
+        <label for="m4">Ciclo autopulizia 90°C</label>
+        <span class="maint-freq">1 mese</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m5">
+        <label for="m5">Trattamento anticalcare</label>
+        <span class="maint-freq">3 mesi</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m6">
+        <label for="m6">Controllo tubo carico</label>
+        <span class="maint-freq">annuale</span>
+      </div>
+      <div class="maint-item">
+        <input type="checkbox" id="m7">
+        <label for="m7">Sostituzione tubo carico</label>
+        <span class="maint-freq">5 anni</span>
+      </div>
+    </div>
+
+    <!-- Program Guide by Clothing -->
+    <div class="rs-block">
+      <div class="rs-block-title">Guida Pratica</div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🛏️</span>
+        <div class="prog-info">
+          <div class="prog-name">Lenzuola & federe</div>
+          <div class="prog-detail">Cotone · 60°C</div>
+        </div>
+        <span class="prog-temp">1200 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧖</span>
+        <div class="prog-info">
+          <div class="prog-name">Asciugamani</div>
+          <div class="prog-detail">Cotone · 60°C</div>
+        </div>
+        <span class="prog-temp">1200 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">👔</span>
+        <div class="prog-info">
+          <div class="prog-name">Camicie & magliette</div>
+          <div class="prog-detail">Sintetici · 40°C</div>
+        </div>
+        <span class="prog-temp">900 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">👖</span>
+        <div class="prog-info">
+          <div class="prog-name">Jeans & pantaloni</div>
+          <div class="prog-detail">Sintetici · 40°C</div>
+        </div>
+        <span class="prog-temp">900 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧦</span>
+        <div class="prog-info">
+          <div class="prog-name">Calze & intimo</div>
+          <div class="prog-detail">Sintetici · 40°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧣</span>
+        <div class="prog-info">
+          <div class="prog-name">Lana & cashmere</div>
+          <div class="prog-detail">Lana · 30°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">👗</span>
+        <div class="prog-info">
+          <div class="prog-name">Seta & delicati</div>
+          <div class="prog-detail">Delicati · 30°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🏃</span>
+        <div class="prog-info">
+          <div class="prog-name">Sport & tecnici</div>
+          <div class="prog-detail">Sintetici · 30°C</div>
+        </div>
+        <span class="prog-temp">800 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">🧸</span>
+        <div class="prog-info">
+          <div class="prog-name">Peluche & bambini</div>
+          <div class="prog-detail">Delicati · 30°C</div>
+        </div>
+        <span class="prog-temp">600 rpm</span>
+      </div>
+      <div class="prog-guide-item">
+        <span class="prog-icon">⏱️</span>
+        <div class="prog-info">
+          <div class="prog-name">Poco sporco / urgente</div>
+          <div class="prog-detail">Rapido 30' · 30°C</div>
+        </div>
+        <span class="prog-temp">800 rpm</span>
+      </div>
+    </div>
+
+    <!-- Pro Tips -->
+    <div class="rs-block">
+      <div class="rs-block-title">Consigli Pro</div>
+      <div class="tip-card">
+        <div class="tip-text">Non riempire il cesto fino al bordo. Lascia sempre un palmo di spazio per far girare i capi.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-text">Versa il detersivo nella vaschetta, mai direttamente nel cesto. Evita macchie e sprechi.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-text">Lava gli asciugamani separatamente dal resto. Assorbono molto più detersivo del necessario.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-text">Lascia lo sportello aperto dopo ogni lavaggio per asciugare la gomma e prevenire muffe.</div>
+      </div>
+    </div>
+
+  </aside>
+</div><!-- /main-wrap -->
+
+<script>
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+const menuBtn=document.getElementById('menuToggle');
+
+function openMenu(){
+  sidebar.classList.add('open');
+  overlay.classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+  document.body.style.overflow='';
+}
+menuBtn.addEventListener('click',openMenu);
+overlay.addEventListener('click',closeMenu);
+
+// highlight active section & close menu on link click
+const links=sidebar.querySelectorAll('a');
+const sections=document.querySelectorAll('section[id], #hero');
+links.forEach(a=>{
+  a.addEventListener('click',e=>{
+    closeMenu();
+    links.forEach(l=>l.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+// active section observer
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id=entry.target.id;
+      links.forEach(l=>{
+        l.classList.toggle('active',l.getAttribute('href')==='#'+id);
+      });
+    }
+  });
+},{rootMargin:'-30% 0px -40% 0px'});
+sections.forEach(s=>obs.observe(s));
+
+// maintenance checkboxes
+document.querySelectorAll('.maint-item input[type=checkbox]').forEach(cb=>{
+  cb.addEventListener('change',()=>{
+    cb.closest('.maint-item').classList.toggle('done',cb.checked);
+  });
+});
+</script>
+
+</body>
+</html>
